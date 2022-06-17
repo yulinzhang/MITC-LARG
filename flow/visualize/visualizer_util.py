@@ -131,9 +131,15 @@ def set_argument(evaluate=False):
     parser.add_argument('--num_training_iterations', type=int, help="the number of training iterations")
     parser.add_argument('--use_trained_inflow', action='store_true', help="use the original inflow and vehicle parameters in the trained model")
     parser.add_argument('--krauss_controller', action='store_true', help="use the Default Krauss model in SUMO; otherwise, use the idm controller")
+    parser.add_argument('--max_deceleration', type=float, help="set the max deceleration")
 
     args = parser.parse_args()
     return args
+
+def set_envs_params(args, flow_params):
+    env_params = flow_params['env']
+    if args.max_deceleration is not None:
+        env_params.additional_params['max_decel'] = args.max_deceleration
 
 def set_network(args, flow_params):
 

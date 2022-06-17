@@ -305,6 +305,9 @@ def visualizer_rllib(args, do_print_metric_per_time_step=False, seed=None):
     more detailed information on what information can be fed to this
     visualizer), and renders the experiment associated with it.
     """
+
+    global MEASUREMENT_RATE
+
     result_dir = args.result_dir if args.result_dir[-1] != '/' \
         else args.result_dir[:-1]
 

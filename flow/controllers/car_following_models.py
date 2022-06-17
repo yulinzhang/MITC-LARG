@@ -471,6 +471,7 @@ class IDMController(BaseController):
         #self.track=False
 
     def get_accel(self, env):
+        
         """See parent class."""
         # solve leader issues near junctions using get_lane_leaders()
         # add from Daniel
@@ -502,6 +503,12 @@ class IDMController(BaseController):
                 0, v * self.T + v * (v - lead_vel) /
                 (2 * np.sqrt(self.a * self.b)))
         output_accel=self.a * (1 - (v / self.v0)**self.delta - (s_star / h)**2)
+
+        #if self.veh_id == "flow_00.30":
+        #    veh_vel = env.k.vehicle.get_speed(self.veh_id)
+        #    print(self.veh_id, "vel:", veh_vel, "output_accelation", output_accel, "leader:", lead_id, "headway", h)
+        #    input()
+
         # current_loc=env.k.vehicle.get_x_by_id(self.veh_id)
         # current_edge=env.k.vehicle.get_edge(self.veh_id)
 

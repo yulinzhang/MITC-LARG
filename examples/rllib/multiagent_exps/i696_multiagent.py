@@ -76,7 +76,8 @@ scenarios_dir = scenario_dir_path
 scenarios_dir = scenario_dir_path
 scenario_road_data = {"name" : "I696_ONE_LANE",
             #"net" : os.path.join(scenarios_dir, 'i696', 'i696-three-merges.net.xml'), 
-            "net" : os.path.join(scenarios_dir, 'i696', 'multilane-i696-three-merges.net.xml'), 
+            #"net" : os.path.join(scenarios_dir, 'i696', 'multilane-i696-three-merges.net.xml'), 
+            "net" : os.path.join(scenarios_dir, 'i696', 'modified-multilane-i696-three-merges.net.xml'), 
             #"net" : os.path.join(scenarios_dir, 'i696', 'osm.net.i696_onelane.xml'), 
             #"rou" : [os.path.join(scenarios_dir, 'i696', 'i696.rou.xml')],
             "rou" : [os.path.join(scenarios_dir, 'i696', 'i696.three.merges.rou.xml')],

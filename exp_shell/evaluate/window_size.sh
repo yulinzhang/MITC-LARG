@@ -1,6 +1,6 @@
 FLOW_DIR=${PWD}/../..
-#VISUALIZER=$FLOW_DIR/flow/visualize/new_rllib_visualizer.py
-VISUALIZER=$FLOW_DIR/flow/visualize/parallized_visualizer.py
+VISUALIZER=$FLOW_DIR/flow/visualize/new_rllib_visualizer.py
+#VISUALIZER=$FLOW_DIR/flow/visualize/parallized_visualizer.py
 EXP_FOLDER=$FLOW_DIR/exp_results/
 
 POLICY_DIR=${HOME}/ray_results/yulin_random_placement_multiagent_Even_Avp30_Main2000_Merge200_highway_merge4_Full_Collaborate_lr_schedule_eta1_0.9_eta2_0.1/PPO_MultiAgentHighwayPOEnvMerge4Collaborate-v0_740c0_00000_0_2021-07-04_14-31-39
@@ -84,21 +84,21 @@ CHCKPOINT=1
 WINDOW_RIGHT=100
 WINDOW_ABOVE=200
 
-render='no_render'
+render='sumo_gui'
 
 #for WINDOW_LEFT in 522.6 #200 400 600 800 1000 #100 200 300 400 500 600 700 800 900 1000
 
-AVP=10 
+AVP=0 
 J=0
 for horizon in 8000
 do
     for measurement in 2000
     do
-        for I in 1 3 #3 #2 3 4 5 6 7 
+        for I in 1 #3 #3 #2 3 4 5 6 7 
         do
             WORKING_DIR=$EXP_FOLDER/may10_window_size_${horizon}_${measurement}_${WINDOW_LEFT[$I]}
             mkdir ${WORKING_DIR}
-            for MERGE_LEN in 200 300 400 500 
+            for MERGE_LEN in 500 #300 400 500 
             do 
                 let MAIN_RL_INFLOW=MAIN_INFLOW*${AVP}/100
                 let MAIN_HUMAN_INFLOW=MAIN_INFLOW-MAIN_RL_INFLOW
@@ -117,7 +117,7 @@ do
                     --print_metric_per_time_step_in_file metrics \
                     --cpu 50 \
                     --render_mode ${render} \
-                    >> ${WORKING_DIR}/EVAL_${MAIN_INFLOW}_${MERGE_INFLOW}_${AVP}_${HIGHWAY_LEN[7]}_${MERGE_LEN}.txt  
+                    >> ${WORKING_DIR}/EVAL_${MAIN_INFLOW}_${MERGE_INFLOW}_${AVP}_${HIGHWAY_LEN[1]}_${MERGE_LEN}.txt  
                     #>> ${WORKING_DIR}/EVAL_${MAIN_INFLOW}_${MERGE_INFLOW}_${AVP}_${WINDOW_LEFT[$I]}_${HIGHWAY_LEN[7]}.txt  
                     # --krauss_controller \
                     #--print_metric_per_time_step_in_file metrics \

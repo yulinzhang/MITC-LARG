@@ -49,7 +49,7 @@ from flow.core.params import EnvParams, NetParams, InitialConfig, InFlows, \
                              VehicleParams, SumoParams, \
                              SumoCarFollowingParams, SumoLaneChangeParams
 
-from flow.visualize.visualizer_util import add_vehicles, add_vehicles_no_lane_change, add_vehicles_with_lane_change, add_preset_inflows, reset_inflows, reset_inflows_i696, set_argument, set_network
+from flow.visualize.visualizer_util import add_vehicles, add_vehicles_no_lane_change, add_vehicles_with_lane_change, add_preset_inflows, reset_inflows, reset_inflows_i696, set_argument, set_network, set_envs_params
 
 from tools.matplotlib_plot import PlotWriter
 # from tools.tikz_plot import PlotWriter
@@ -159,6 +159,9 @@ def visualizer_rllib(args, do_print_metric_per_time_step=False, seed=None):
     more detailed information on what information can be fed to this
     visualizer), and renders the experiment associated with it.
     """
+
+    global MEASUREMENT_RATE
+
     result_dir = args.result_dir if args.result_dir[-1] != '/' \
         else args.result_dir[:-1]
 
@@ -301,6 +304,7 @@ def visualizer_rllib(args, do_print_metric_per_time_step=False, seed=None):
     env_params.restart_instance = True
     net_params=flow_params['net']
 
+    set_envs_params(args, flow_params)
     set_network(args, flow_params)
 
     if args.measurement_rate is not None:
@@ -466,6 +470,7 @@ def visualizer_rllib(args, do_print_metric_per_time_step=False, seed=None):
     if args.print_vehicles_per_time_step_in_file:
         flow.envs.enable_total_num_of_vehicles=True
 
+    print("***************", env_params.additional_params)
     # record for visualization purposes
     actions = []
     rewards = []
@@ -890,6 +895,7 @@ if __name__ == '__main__':
     num_cpus=1,
     num_gpus=0,
     object_store_memory=1024*1024*1024)
+
 
     if args.measurement_rate is not None:
         MEASUREMENT_RATE = args.measurement_rate
