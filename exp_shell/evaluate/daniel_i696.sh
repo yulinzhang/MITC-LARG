@@ -12,14 +12,19 @@ TRAIN_DIR_i696=${HOME}/ray_results/i696_window_size_300_300/PPO_MultiAgentI696PO
 #TRAIN_DIR_i696=${HOME}/ray_results/zyl_i696_window_size_300_300/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_fc465_00000_0_2022-05-01_22-14-32/
 TRAIN_DIR_i696=${HOME}/ray_results/zyl_i696_window_size_300_300/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_f7bca_00000_0_2022-05-02_16-00-59/
 
+TRAIN_DIR_i696=${HOME}/may13/zipper_merge_i696_window_size_300.0_300.0/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_c8963_00000_0_2022-05-13_20-40-06
+
+
+
+
 echo "*************add python path to current direction***********"
 export PYTHONPATH="${PYTHONPATH}:${PWD}/../../"
 
 CHCKPOINT=1
 
-MAIN_HUMAN=4000
+MAIN_HUMAN=8000
 MAIN_RL=0
-MERGE=300
+MERGE=400
 python3 $VISUALIZER \
             $TRAIN_DIR_i696 \
             $CHCKPOINT \
@@ -28,6 +33,7 @@ python3 $VISUALIZER \
             --render_mode sumo_gui \
             --i696 \
             --lateral_resolution 0.25 \
+            --max_deceleration 20 \
             --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE
 
 wait 

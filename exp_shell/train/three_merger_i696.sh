@@ -14,7 +14,7 @@ python3 ${FLOW_DIR}/examples/rllib/multiagent_exps/i696_multiagent.py \
         --window_size 300 300 \
         --cpu 10 \
         --i696 \
-        --exp_folder_mark 'zyl' \
+        --exp_folder_mark 'zipper_merge' \
         --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE
 
 
