@@ -37,6 +37,7 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
         self.rl_to_ignore=list()
         self.debug_coord=dict()
         self.debug=False
+        self.shadow_headway = False
 
     @property
     def observation_space(self):
@@ -218,7 +219,8 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
         #junctions = set(self.k.network.get_junction_list())
 
         # add shadow vehicle
-        self.add_shadow_vehicle()
+        if self.shadow_headway:
+            self.add_shadow_vehicle()
         # normalizing constants
         max_speed = 30.0 #self.k.network.max_speed()
         #max_length = 1000.0 #self.k.network.length()
@@ -330,7 +332,7 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
 
 
 class MultiAgentI696POEnvParameterizedWindowSizeCollaborate(MultiAgentI696POEnvParameterizedWindowSize):
-
+    
     def compute_reward(self, rl_actions, **kwargs):
         rewards = {}
         if "eta1" in self.env_params.additional_params.keys():
@@ -348,4 +350,9 @@ class MultiAgentI696POEnvParameterizedWindowSizeCollaborate(MultiAgentI696POEnvP
             del rewards[rl_id]
         return rewards
 
+class MultiAgentI696ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate(MultiAgentI696POEnvParameterizedWindowSizeCollaborate):
+    def __init__(self, env_params, sim_params, network, simulator='traci'):
+        super().__init__(env_params, sim_params, network, simulator)
+        self.shadow_headway = True
 
+    
