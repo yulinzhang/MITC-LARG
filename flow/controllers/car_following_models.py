@@ -464,6 +464,9 @@ class IDMController(BaseController):
         self.delta = delta
         self.s0 = s0
         self.dt = dt
+        #self.shadow_leader = None
+        #self.shadow_to_junction = None
+        self.shadow_lead_headway = None
         #self.prev_loc=0
         #self.prev_edge=None
         #self.loc_time_to_skip=200
@@ -485,12 +488,20 @@ class IDMController(BaseController):
         # Fix the leader to be the leader on the same lane
         lead_ids = env.k.vehicle.get_lane_leaders(self.veh_id)
         lead_id=lead_ids[lane_id]
-
+        
         #h = env.k.vehicle.get_headway(self.veh_id)
         # Fix the heaway to be the headway on the same lane accordingly
         headways=env.k.vehicle.get_lane_headways(self.veh_id)
         h=headways[lane_id] 
-
+        edge_id = env.k.vehicle.get_edge(self.veh_id)
+        # check shadow leader
+        if self.shadow_lead_headway is not None and lane_id == 0 and edge_id in ["491266613.232", "456864110", "124433730#1"]:
+            #dist_to_shadow_leader = (env.k.network.edge_length(edge_id) - env.k.vehicle.get_position(self.veh_id)) - self.shadow_to_junction  
+            #print("dist_to_shadow_leader", self.shadow_lead_headway)
+            #pass
+            prev_h = h
+            h = min(h, self.shadow_lead_headway)
+            print("shadow leader set for", self.veh_id, prev_h, "->", h, "on edge", env.k.vehicle.get_edge(self.veh_id))
         # in order to deal with ZeroDivisionError
         if abs(h) < 1e-3:
             h = 1e-3

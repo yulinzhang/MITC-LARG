@@ -5,6 +5,10 @@ from flow.envs.multiagent.base import MultiEnv
 from flow.envs.multiagent.highway import MultiAgentHighwayPOEnv
 import collections
 import os
+from statistics import mean
+
+debug = False
+
 ADDITIONAL_ENV_PARAMS = {
     # maximum acceleration of autonomous vehicles
     'max_accel': 1,
@@ -117,11 +121,104 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
             veh_vel=self.k.vehicle.get_speed(first_veh)
 
         return first_veh, len_of_veh_to_junction, veh_vel
+    def avg_speed_on_edge(self, edge_id):
+        vehs_on_edge = self.k.vehicle.get_ids_by_edge(edge_id)
+        if vehs_on_edge is None:
+            return None
+        vels = list()
+        for veh_id in vehs_on_edge: 
+            veh_vel = self.k.vehicle.get_speed(veh_id)
+            vels.append(veh_vel)
+        if len(vels) == 0:
+            return 30
+        else:
+            return mean(vels)
+
+    def find_first_veh_on_edge(self, edge_id):
+        largest_pos = -1
+        first_veh = None
+        vehs_on_edge = self.k.vehicle.get_ids_by_edge(edge_id)
+        if vehs_on_edge is None:
+            return None
+        for veh_id in vehs_on_edge: 
+            veh_pos=self.k.vehicle.get_position(veh_id)
+            if veh_pos>largest_pos:
+                largest_pos=veh_pos
+                first_veh=veh_id
+        return first_veh
+
+    def reset_shadow_veh(self, veh_id):
+        controller = self.k.vehicle.get_acc_controller(veh_id)
+        if controller is not None:
+            controller.shadow_lead_headway = None      
+    def set_shadow_vehicle(self, merge_veh_to_shadow, main_edge, merge_edge):
+        # find the scaled distance of the first merging vehicle
+        merge_pos = self.k.vehicle.get_position(merge_veh_to_shadow) 
+        merge_dist_to_junction = self.k.network.edge_length(merge_edge) - merge_pos
+        main_avg_speed = self.avg_speed_on_edge(main_edge)
+        merge_speed = self.k.vehicle.get_speed(merge_veh_to_shadow)
+        if merge_speed > 0:
+            scaled_merge_dist_to_junction = merge_dist_to_junction * main_avg_speed/merge_speed
+        else:
+            scaled_merge_dist_to_junction = merge_dist_to_junction 
+        if debug:
+            print("scaled_merge_dist_to_junction of", merge_edge, scaled_merge_dist_to_junction)
+
+        # find the first main vehicle behind
+        edge_len = self.k.network.edge_length(main_edge)
+        first_larger = None
+        shortest_dist_to_junction = edge_len 
+        vehs_on_edge = self.k.vehicle.get_ids_by_edge(main_edge)
+        for veh_id in vehs_on_edge:
+            lane_id = self.k.vehicle.get_lane(veh_id)
+            if lane_id != 0:
+                continue
+            self.reset_shadow_veh(veh_id)
+            veh_pos= self.k.vehicle.get_position(veh_id)
+            dist_to_junction = edge_len - veh_pos
+            if debug:
+                print("main road", main_edge, veh_id, "dist_to_junction", dist_to_junction, first_larger)
+            if dist_to_junction > scaled_merge_dist_to_junction: #and dist_to_junction <= 200: 
+                if dist_to_junction < shortest_dist_to_junction:
+                   shortest_dist_to_junction = dist_to_junction
+                   first_larger = veh_id
+
+        # add the shadow leader 
+        controller = self.k.vehicle.get_acc_controller(first_larger)
+        if first_larger is not None:
+            if debug:
+                print("-main road", main_edge, first_larger, "dist_to_shadow", shortest_dist_to_junction)
+            #controller.shadow_leader = merge_veh_to_shadow
+            #controller.shadow_to_junction = shortest_dist_to_junction
+            controller.shadow_lead_headway = shortest_dist_to_junction - scaled_merge_dist_to_junction
+
+            if debug:
+                print("-dist_to_shadow_leader", controller.shadow_lead_headway)
+        else:
+            if debug:
+                print("-None")
+
+    def add_shadow_vehicle(self):
+        # find the first merging vehicle from each merging lane
+        # right most: 124433709.427
+        merge_edges = ["124433709.427", "8666737", "178253095"]
+        main_edges = ["491266613.232", "456864110", "124433730#1"]
+        for i in range(3):
+            main_edge = main_edges[i]
+            merge_edge = merge_edges[i]
+            first_veh = self.find_first_veh_on_edge(merge_edge)
+            if first_veh is not None:
+                self.set_shadow_vehicle(first_veh, main_edge, merge_edge)
+
+                if debug:
+                    print("found in ", merge_edge, first_veh, self.k.vehicle.get_position(first_veh))
 
     def get_state(self):
         states = super().get_state()
         #junctions = set(self.k.network.get_junction_list())
 
+        # add shadow vehicle
+        self.add_shadow_vehicle()
         # normalizing constants
         max_speed = 30.0 #self.k.network.max_speed()
         #max_length = 1000.0 #self.k.network.length()
