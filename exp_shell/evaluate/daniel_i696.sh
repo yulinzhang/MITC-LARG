@@ -1,6 +1,7 @@
 FLOW_DIR=${PWD}/../..
-VISUALIZER=$FLOW_DIR/flow/visualize/new_rllib_visualizer.py
-EXP_FOLDER=$FLOW_DIR/exp_results/i696_random
+#VISUALIZER=$FLOW_DIR/flow/visualize/new_rllib_visualizer.py
+VISUALIZER=$FLOW_DIR/flow/visualize/parallized_visualizer.py
+EXP_FOLDER=$FLOW_DIR/exp_results/
 
 # merge 200
 
@@ -12,10 +13,12 @@ TRAIN_DIR_i696=${HOME}/ray_results/i696_window_size_300_300/PPO_MultiAgentI696PO
 #TRAIN_DIR_i696=${HOME}/ray_results/zyl_i696_window_size_300_300/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_fc465_00000_0_2022-05-01_22-14-32/
 TRAIN_DIR_i696=${HOME}/ray_results/zyl_i696_window_size_300_300/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_f7bca_00000_0_2022-05-02_16-00-59/
 
+TRAIN_DIR_i696=${HOME}/jun27/shadow_i696/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_95f34_00000_0_2022-06-27_18-48-03
 TRAIN_DIR_i696=${HOME}/may13/zipper_merge_i696_window_size_300.0_300.0/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_c8963_00000_0_2022-05-13_20-40-06
 
 
-
+mkdir ${EXP_FOLDER}
+WORKING_DIR=$EXP_FOLDER
 
 echo "*************add python path to current direction***********"
 export PYTHONPATH="${PYTHONPATH}:${PWD}/../../"
@@ -25,16 +28,21 @@ CHCKPOINT=1
 MAIN_HUMAN=8000
 MAIN_RL=0
 MERGE=400
+measurement=8000
 python3 $VISUALIZER \
             $TRAIN_DIR_i696 \
             $CHCKPOINT \
             --seed_dir $FLOW_DIR \
-            --horizon 4000 \
-            --render_mode sumo_gui \
+            --horizon 14000 \
             --i696 \
+            --render_mode no_render \
+            --cpu 50 \
+            --measurement_rate ${measurement} \
             --lateral_resolution 0.25 \
             --max_deceleration 20 \
-            --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE
+            --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
+            >> ${WORKING_DIR}/3merger_i696/EVAL_shadow_${MAIN_HUMAN}_${MAIN_RL}_${MERGE}.txt 
+            #--print_metric_per_time_step_in_file metrics 
 
 wait 
 
