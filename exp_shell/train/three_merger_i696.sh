@@ -10,7 +10,7 @@ MAIN_HUMAN=1
 MAIN_RL=0
 MERGE=1
 
-python3 ${FLOW_DIR}/examples/rllib/multiagent_exps/i696_multiagent.py \
+python3 ${FLOW_DIR}/examples/rllib/multiagent_exps/i696_multiagent_shadow.py \
         --window_size 300 300 \
         --cpu 10 \
         --i696 \
