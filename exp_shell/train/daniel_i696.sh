@@ -8,7 +8,23 @@ export RAY_MEMORY_MONITOR_ERROR_THRESHOLD=0.8
 # Even vehicle placement
 MERGE_INFLOW=200
 
-python3 ${FLOW_DIR}/examples/rllib/stabilizing_i696.py 
+MAIN_HUMAN=8000
+MAIN_RL=800
+MERGE=400
+#python3 ${FLOW_DIR}/examples/rllib/stabilizing_i696.py 
+HORIZONTAL_WINDOW=600
+VERTICAL_WINDOW=200
+
+python3 ${FLOW_DIR}/examples/rllib/multiagent_exps/i696_multiagent.py \
+            --horizon 4000 \
+            --i696 \
+            --lateral_resolution 0.25 \
+            --max_deceleration 20 \
+            --cpu 40 \
+            --window_size ${HORIZONTAL_WINDOW} ${VERTICAL_WINDOW} \
+            --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE
+
+
 #for AVP in 10 #30 50 80 100
 #do
 #	for MAIN_INFLOW in 1850 #1650 1850 2000 
