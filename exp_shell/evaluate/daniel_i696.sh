@@ -1,6 +1,6 @@
 FLOW_DIR=${PWD}/../..
-VISUALIZER=$FLOW_DIR/flow/visualize/new_rllib_visualizer.py
-#VISUALIZER=$FLOW_DIR/flow/visualize/parallized_visualizer.py
+#VISUALIZER=$FLOW_DIR/flow/visualize/new_rllib_visualizer.py
+VISUALIZER=$FLOW_DIR/flow/visualize/parallized_visualizer.py
 EXP_FOLDER=$FLOW_DIR/exp_results/
 
 # merge 200
@@ -18,7 +18,8 @@ TRAIN_DIR_i696=${HOME}/may13/zipper_merge_i696_window_size_300.0_300.0/PPO_Multi
 TRAIN_DIR_i696_shadow=${HOME}/july7/shadow/PPO_MultiAgentI696ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate-v0_b4c71_00000_0_2022-07-07_19-48-39
 
 mkdir ${EXP_FOLDER}
-WORKING_DIR=$EXP_FOLDER
+WORKING_DIR=$EXP_FOLDER/july8_i696
+mkdir ${WORKING_DIR}
 
 echo "*************add python path to current direction***********"
 export PYTHONPATH="${PYTHONPATH}:${PWD}/../../"
@@ -29,20 +30,24 @@ MAIN_HUMAN=8000
 MAIN_RL=0
 MERGE=400
 measurement=8000
-for MAIN_HUMAN in 8000 6000 4000
+render=no_render
+
+for MAIN_HUMAN in 8000  
+do
     python3 $VISUALIZER \
                 $TRAIN_DIR_i696 \
                 $CHCKPOINT \
                 --seed_dir $FLOW_DIR \
                 --horizon 14000 \
                 --i696 \
-                --render_mode sumo_gui \
-                --cpu 50 \
+                --render_mode ${render} \
+                --cpu 52 \
+                --num_of_rand_seeds 50 \
                 --measurement_rate ${measurement} \
                 --lateral_resolution 0.25 \
                 --max_deceleration 20 \
                 --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
-                >> ${WORKING_DIR}/july8_i696/EVAL_idm_${MAIN_HUMAN}_${MAIN_RL}_${MERGE}.txt 
+                >> ${WORKING_DIR}/EVAL_idm_${MAIN_HUMAN}_${MAIN_RL}_${MERGE}.txt 
 
     python3 $VISUALIZER \
                 $TRAIN_DIR_i696_shadow \
@@ -50,14 +55,16 @@ for MAIN_HUMAN in 8000 6000 4000
                 --seed_dir $FLOW_DIR \
                 --horizon 14000 \
                 --i696 \
-                --render_mode sumo_gui \
-                --cpu 50 \
+                --render_mode ${render} \
+                --num_of_rand_seeds 50 \
+                --cpu 52 \
                 --measurement_rate ${measurement} \
                 --lateral_resolution 0.25 \
                 --max_deceleration 20 \
                 --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
-                >> ${WORKING_DIR}/july8_i696/EVAL_shadow_${MAIN_HUMAN}_${MAIN_RL}_${MERGE}.txt 
+                >> ${WORKING_DIR}/EVAL_shadow_${MAIN_HUMAN}_${MAIN_RL}_${MERGE}.txt 
                 #--print_metric_per_time_step_in_file metrics 
+done
 
 wait 
 
