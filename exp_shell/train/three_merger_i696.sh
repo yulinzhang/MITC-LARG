@@ -14,9 +14,8 @@ python3 ${FLOW_DIR}/examples/rllib/multiagent_exps/i696_multiagent_shadow.py \
         --window_size 300 300 \
         --cpu 10 \
         --i696 \
-        --exp_folder_mark 'zipper_merge' \
+        --exp_folder_mark 'shadow_zipper_merge' \
         --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE
-
 
 
 #for AVP in 10 #30 50 80 100

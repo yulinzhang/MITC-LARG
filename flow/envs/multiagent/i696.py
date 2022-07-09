@@ -7,7 +7,7 @@ import collections
 import os
 from statistics import mean
 
-debug = False
+debug = True 
 
 ADDITIONAL_ENV_PARAMS = {
     # maximum acceleration of autonomous vehicles
@@ -152,6 +152,7 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
         controller = self.k.vehicle.get_acc_controller(veh_id)
         if controller is not None:
             controller.shadow_lead_headway = None      
+
     def set_shadow_vehicle(self, merge_veh_to_shadow, main_edge, merge_edge):
         # find the scaled distance of the first merging vehicle
         merge_pos = self.k.vehicle.get_position(merge_veh_to_shadow) 
@@ -159,7 +160,8 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
         main_avg_speed = self.avg_speed_on_edge(main_edge)
         merge_speed = self.k.vehicle.get_speed(merge_veh_to_shadow)
         if merge_speed > 0:
-            scaled_merge_dist_to_junction = merge_dist_to_junction * main_avg_speed/merge_speed
+            #scaled_merge_dist_to_junction = merge_dist_to_junction * main_avg_speed/merge_speed
+            scaled_merge_dist_to_junction = merge_dist_to_junction 
         else:
             scaled_merge_dist_to_junction = merge_dist_to_junction 
         if debug:
@@ -214,12 +216,21 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
                 if debug:
                     print("found in ", merge_edge, first_veh, self.k.vehicle.get_position(first_veh))
 
+            first_veh = self.find_first_veh_on_edge(main_edge)
+            if first_veh is not None:
+                self.set_shadow_vehicle(first_veh, merge_edge, main_edge)
+
+                if debug:
+                    print("found in ", main_edge, first_veh, self.k.vehicle.get_position(first_veh))
+
     def get_state(self):
         states = super().get_state()
         #junctions = set(self.k.network.get_junction_list())
 
         # add shadow vehicle
+        print("get_state")
         if self.shadow_headway:
+            print("add shadow")
             self.add_shadow_vehicle()
         # normalizing constants
         max_speed = 30.0 #self.k.network.max_speed()
@@ -354,5 +365,6 @@ class MultiAgentI696ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate(MultiAg
     def __init__(self, env_params, sim_params, network, simulator='traci'):
         super().__init__(env_params, sim_params, network, simulator)
         self.shadow_headway = True
+        print("-------------MultiAgentI696ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate--------")
 
     

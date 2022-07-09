@@ -1,4 +1,4 @@
-from flow.controllers import IDMController, RLController, IDMRLController, SimCarFollowingController
+from flow.controllers import IDMController, RLController, IDMRLController, SimCarFollowingController 
 from flow.core.params import EnvParams, NetParams, InitialConfig, InFlows, \
                              VehicleParams, SumoParams, \
                              SumoCarFollowingParams, SumoLaneChangeParams
@@ -19,6 +19,11 @@ NO_LANE_CHANGE_COLLISION_AVOID_SAFETY_GAP_CHECK=512
 LANE_CHANGE_MODE=LANE_CHANGE_REPECT_COLLISION_AVOID_AND_SAFETY_GAP #LANE_CHANGE_REPECT_COLLISION_AVOID#LANE_CHANGE_REPECT_COLLISION_AVOID_AND_SAFETY_GAP #LANE_CHANGE_NO_REPECT_OTHERS##LANE_CHANGE_NO_REPECT_OTHERS
 NO_LANE_CHANGE_MODE=NO_LANE_CHANGE_COLLISION_AVOID_SAFETY_GAP_CHECK
 
+SPEED_MODE_SAFE_SPEED_ACCELEARTION_BOUND_NO_RIGHT_OF_WAY_OUTSIDE = 7
+SPEED_MODE_SAFE_SPEED_ACCELEARTION_BOUND_RIGHT_OF_WAY_OUTSIDE_AND_INSIDE = 15
+SPEED_MODE_SAFE_SPEED_ACCELEARTION_BOUND_RIGHT_OF_WAY_OUTSIDE_NOT_INSIDE = 47
+SPEED_MODE_SAFE_SPEED_ACCELEARTION_BOUND_NO_RIGHT_OF_WAY_OUTSIDE_NOT_INSIDE = 38
+SPEED_MODE_ALL_OFF = 38 
 Human_Driven_Vehicle_Controller = IDMController
 
 def set_argument(evaluate=False):
@@ -132,6 +137,7 @@ def set_argument(evaluate=False):
     parser.add_argument('--use_trained_inflow', action='store_true', help="use the original inflow and vehicle parameters in the trained model")
     parser.add_argument('--krauss_controller', action='store_true', help="use the Default Krauss model in SUMO; otherwise, use the idm controller")
     parser.add_argument('--max_deceleration', type=float, help="set the max deceleration")
+    parser.add_argument('--num_of_rand_seeds', type=int, help="set the number of random seeds")
 
     args = parser.parse_args()
     return args
@@ -187,6 +193,7 @@ def add_vehicles(vehicles, veh_type, lane_change_mode, speed_mode, num_vehicles,
     print("set parameters:", speed_gain, assertive, lc_probability)
     # CREATE VEHICLE TYPES AND INFLOWS
     # FIXME temporary fix; will change later 
+    print("-------- speed_mode:", speed_mode)
     vehicles.add(
             veh_id=veh_type,
             acceleration_controller=(controller, {}),
@@ -336,14 +343,16 @@ def add_specified_vehicles(vehicle_params, veh_prefix, veh_right_left_or_both, v
         if veh_name is None:
             continue
         operator=add_veh_operators[i]
-        speed_mode=7
+        speed_mode=SPEED_MODE_IN_INTERSECTION_SAFE_SPEED_ACCELEARTION_BOUND
         #veh_num=5
         veh_num=0
         if "human" in veh_name: # the right most lane and human
-            speed_mode=15
+            #speed_mode=15
+            speed_mode = SPEED_MODE_SAFE_SPEED_ACCELEARTION_BOUND_RIGHT_OF_WAY_OUTSIDE
             veh_num=1
         elif "rl" in veh_name:
-            speed_mode=7
+            #speed_mode=7
+            speed_mode = SPEED_MODE_SAFE_SPEED_ACCELEARTION_BOUND_NO_RIGHT_OF_WAY_OUTSIDE
             veh_num=0
 
         operator(vehicle_params, veh_name, speed_mode, veh_num, speed_gain, assertive, lc_probability)
@@ -590,57 +599,14 @@ def reset_inflows_i696(args, flow_params):
 
         vehicles = VehicleParams()
 
-        add_vehicles_with_lane_change(vehicles, "human", 15, 0, 1000000, 100, -1)
-        add_vehicles_with_lane_change(vehicles, "rl", 15, 0, 1000000, 100, -1)
-        # human vehicles
-        #vehicles.add(
-        #    veh_id="human",
-        #    acceleration_controller=(IDMController, {}), #SimCarFollowingController IDMController 
-        #    lane_change_controller=(SimLaneChangeController, {}),
-        #    car_following_params=SumoCarFollowingParams(
-        #        speed_mode=15, #"all_checks", #no_collide",
-        #        #speed_mode=15,  # for safer behavior at the merges
-        #        #tau=1.5  # larger distance between cars
-        #        decel=7.5,  # avoid collisions at emergency stops 
-        #        # desired time-gap from leader
-        #        tau=1.5, #7,
-        #        min_gap=2.5,
-        #        speed_factor=1,
-        #        speed_dev=0.1
-        #    ),
-        #    #lane_change_params=SumoLaneChangeParams(lane_change_mode=1621)
-        #    lane_change_params=SumoLaneChangeParams(
-        #        model="SL2015",
-        #        # Define a lane changing mode that will allow lane changes
-        #        # See: https://sumo.dlr.de/wiki/TraCI/Change_Vehicle_State#lane_change_mode_.280xb6.29
-        #        # and: ~/local/flow_2019_07/flow/core/params.py, see LC_MODES = {"aggressive": 0 /*bug, 0 is no lane-changes*/, "no_lat_collide": 512, "strategic": 1621}, where "strategic" is the default behavior
-        #        lane_change_mode=512,#0b011000000001, # (like default 1621 mode, but no lane changes other than strategic to follow route, # 512, #(collision avoidance and safety gap enforcement) # "strategic", 
-        #        lc_speed_gain=1000000,
-        #        lc_assertive=100, #20,
-        #        # the following two replace default values which are not read well by xml parser
-        #        lc_pushy_gap=0.6, #default
-        #        lc_keep_right=0, #was 0
-        #        lc_impatience=1e-8,
-        #        lc_time_to_impatience=1e12
-        #    ),
-        #  num_vehicles=0)
-
-        ## autonomous vehicles
-        #vehicles.add(
-        #    veh_id="rl",
-        #    acceleration_controller=(RLController, {}),
-        #    car_following_params=SumoCarFollowingParams(
-        #      # Define speed mode that will minimize collisions: https://sumo.dlr.de/wiki/TraCI/Change_Vehicle_State#speed_mode_.280xb3.29
-        #      speed_mode=7, #"all_checks", #no_collide",
-        #      decel=7.5,  # avoid collisions at emergency stops 
-        #      # desired time-gap from leader
-        #      tau=1.5, #7,
-        #      min_gap=2.5,
-        #      speed_factor=1,
-        #      speed_dev=0.1
-        #    ),
-        #    num_vehicles=0)
-
+        #speed_mode = SPEED_MODE_SAFE_SPEED_ACCELEARTION_BOUND_NO_RIGHT_OF_WAY_OUTSIDE_NOT_INSIDE
+        #speed_mode = SPEED_MODE_ALL_OFF
+        speed_mode = SPEED_MODE_SAFE_SPEED_ACCELEARTION_BOUND_RIGHT_OF_WAY_OUTSIDE_AND_INSIDE 
+        #speed_mode = SPEED_MODE_SAFE_SPEED_ACCELEARTION_BOUND_RIGHT_OF_WAY_OUTSIDE_NOT_INSIDE
+        #print("speed_mode", speed_mode)
+        add_vehicles_with_lane_change(vehicles, "human", speed_mode, 0, 1000000, 100, -1)
+        add_vehicles_with_lane_change(vehicles, "rl", speed_mode, 0, 1000000, 100, -1)
+        
         flow_params['veh']=vehicles
         merge_entrance_from_right_to_left = ["124433709.427", "8666737", "178253095"]
         main_right_entrance = "59440544#0"

@@ -516,6 +516,7 @@ class IDMController(BaseController):
         output_accel=self.a * (1 - (v / self.v0)**self.delta - (s_star / h)**2)
 
         #if self.veh_id == "flow_00.30":
+        #if self.veh_id == "flow_00.54":
         #    veh_vel = env.k.vehicle.get_speed(self.veh_id)
         #    print(self.veh_id, "vel:", veh_vel, "output_accelation", output_accel, "leader:", lead_id, "headway", h)
         #    input()

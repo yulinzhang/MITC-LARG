@@ -824,6 +824,9 @@ if __name__ == '__main__':
     seed_filename.sort()
     result_dict=dict()
     for i in range(len(seed_filename)):
+        if args.num_of_rand_seeds:
+            if i == args.num_of_rand_seeds:
+                break
         if args.run_random_seed>=0:
             i=args.run_random_seed
         k=random.choice(np.arange(len(seed_filename)))

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Thu 07 Jul 2022 07:41:19 PM CDT by Eclipse SUMO netedit Version 1.9.0
+<!-- generated on Fri 08 Jul 2022 11:50:28 AM CDT by Eclipse SUMO netedit Version 1.9.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="modified-multilane-i696-three-merges.net.xml"/>
+        <sumo-net-file value="junction-controller-disabled-multilane-i696-three-merges.net.xml"/>
     </input>
 
     <output>
-        <output-file value="modified-multilane-i696-three-merges.net.xml"/>
+        <output-file value="junction-controller-disabled-multilane-i696-three-merges.net.xml"/>
         <output.street-names value="true"/>
     </output>
 
