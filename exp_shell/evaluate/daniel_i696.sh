@@ -32,7 +32,7 @@ MERGE=400
 measurement=8000
 render=no_render
 
-for WINDOW in 100 200 400 
+for WINDOW in 100 200 
 do
     #python3 $VISUALIZER \
     #            $TRAIN_DIR_i696 \
@@ -62,7 +62,7 @@ do
                 --lateral_resolution 0.25 \
                 --max_deceleration 20 \
                 --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
-		--window_size $WINDOW $WINDOW \
+		--window_size $WINDOW $WINDOW $WINDOW \
                 >> ${WORKING_DIR}/EVAL_shadow_window_${WINDOW}_${MAIN_HUMAN}_${MAIN_RL}_${MERGE}.txt 
                 #--print_metric_per_time_step_in_file metrics 
 done

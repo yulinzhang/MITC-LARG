@@ -33,7 +33,7 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
                     'Environment parameter "{}" not supplied'.format("window_size"))
 
         super().__init__(env_params, sim_params, network, simulator)
-        self.junction_before, self.junction_after=env_params.additional_params['window_size']
+        self.junction_before, self.junction_after, _=env_params.additional_params['window_size']
         self.rl_to_ignore=list()
         self.debug_coord=dict()
         self.debug=False
