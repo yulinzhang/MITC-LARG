@@ -166,6 +166,10 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
             scaled_merge_dist_to_junction = merge_dist_to_junction 
         if debug:
             print("scaled_merge_dist_to_junction of", merge_edge, scaled_merge_dist_to_junction)
+    
+
+        if scaled_merge_dist_to_junction > self.junction_before:
+            return
 
         # find the first main vehicle behind
         edge_len = self.k.network.edge_length(main_edge)
