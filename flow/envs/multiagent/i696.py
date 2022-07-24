@@ -7,7 +7,7 @@ import collections
 import os
 from statistics import mean
 
-debug = False 
+debug = True 
 
 ADDITIONAL_ENV_PARAMS = {
     # maximum acceleration of autonomous vehicles
@@ -140,7 +140,7 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
         first_veh = None
         vehs_on_edge = self.k.vehicle.get_ids_by_edge(edge_id)
         if vehs_on_edge is None:
-            return None
+            return [] 
         for veh_id in vehs_on_edge: 
             veh_pos=self.k.vehicle.get_position(veh_id)
             if veh_pos>largest_pos:
@@ -249,6 +249,8 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
             main_edge = main_edges[i]
             merge_edge = merge_edges[i]
             vehs_within_window = self.find_veh_within_dist(merge_edge, self.junction_before)
+            if debug:
+                print("***num of vehs within window***", vehs_within_window)
             for veh_id in vehs_within_window:
                 self.set_shadow_vehicle(veh_id, main_edge, merge_edge)
                 if debug:
