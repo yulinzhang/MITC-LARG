@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on Sat 23 Jul 2022 10:32:12 PM CDT by Eclipse SUMO netedit Version 1.9.0
+<!-- generated on Sat 23 Jul 2022 11:35:28 PM CDT by Eclipse SUMO netedit Version 1.9.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
@@ -443,19 +443,34 @@
         <request index="1" response="000" foes="000" cont="0"/>
         <request index="2" response="000" foes="000" cont="0"/>
     </junction>
-    <junction id="62339796" type="unregulated" x="4067.03" y="3944.88" incLanes="178253095_0 124433730#1_0 124433730#1_1 124433730#1_2" intLanes=":62339796_0_0 :62339796_1_0 :62339796_1_1 :62339796_1_2" shape="4088.72,3950.72 4088.98,3947.53 4088.95,3946.66 4087.62,3937.15 4066.59,3941.70 4067.89,3951.22 4072.29,3950.63 4075.57,3950.28 4078.28,3950.13 4081.00,3950.17 4084.29,3950.37"/>
+    <junction id="62339796" type="zipper" x="4067.03" y="3944.88" incLanes="178253095_0 124433730#1_0 124433730#1_1 124433730#1_2" intLanes=":62339796_0_0 :62339796_1_0 :62339796_1_1 :62339796_1_2" shape="4088.72,3950.72 4088.98,3947.53 4088.95,3946.66 4087.62,3937.15 4066.59,3941.70 4067.89,3951.22 4072.29,3950.63 4075.57,3950.28 4078.28,3950.13 4081.00,3950.17 4084.29,3950.37">
+        <request index="0" response="0010" foes="0010" cont="0"/>
+        <request index="1" response="0001" foes="0001" cont="0"/>
+        <request index="2" response="0000" foes="0000" cont="0"/>
+        <request index="3" response="0000" foes="0000" cont="0"/>
+    </junction>
     <junction id="gneJ1" type="priority" x="3999.18" y="3955.73" incLanes="124433730#2-AddedOnRampEdge_0 124433730#2-AddedOnRampEdge_1 124433730#2-AddedOnRampEdge_2" intLanes=":gneJ1_0_0 :gneJ1_0_1 :gneJ1_0_2" shape="3999.98,3960.47 3998.68,3950.95 3998.25,3951.02 3999.81,3960.49">
         <request index="0" response="000" foes="000" cont="0"/>
         <request index="1" response="000" foes="000" cont="0"/>
         <request index="2" response="000" foes="000" cont="0"/>
     </junction>
-    <junction id="gneJ14" type="unregulated" x="5807.63" y="3695.88" incLanes="8666737_0 456864110_0 456864110_1 456864110_2" intLanes=":gneJ14_0_0 :gneJ14_1_0 :gneJ14_1_1 :gneJ14_1_2" shape="5859.90,3697.13 5859.81,3693.93 5859.77,3693.31 5858.42,3683.81 5828.64,3688.08 5829.98,3697.59 5836.30,3696.81 5840.99,3696.49 5844.88,3696.49 5848.78,3696.68 5853.52,3696.94"/>
+    <junction id="gneJ14" type="zipper" x="5807.63" y="3695.88" incLanes="8666737_0 456864110_0 456864110_1 456864110_2" intLanes=":gneJ14_0_0 :gneJ14_1_0 :gneJ14_1_1 :gneJ14_1_2" shape="5859.90,3697.13 5859.81,3693.93 5859.77,3693.31 5858.42,3683.81 5828.64,3688.08 5829.98,3697.59 5836.30,3696.81 5840.99,3696.49 5844.88,3696.49 5848.78,3696.68 5853.52,3696.94">
+        <request index="0" response="0010" foes="0010" cont="0"/>
+        <request index="1" response="0001" foes="0001" cont="0"/>
+        <request index="2" response="0000" foes="0000" cont="0"/>
+        <request index="3" response="0000" foes="0000" cont="0"/>
+    </junction>
     <junction id="gneJ17" type="priority" x="6750.29" y="3561.85" incLanes="489256509_0 489256509_1 489256509_2" intLanes=":gneJ17_0_0 :gneJ17_0_1 :gneJ17_0_2" shape="6751.21,3566.56 6749.65,3557.09 6749.48,3557.12 6750.83,3566.62">
         <request index="0" response="000" foes="000" cont="0"/>
         <request index="1" response="000" foes="000" cont="0"/>
         <request index="2" response="000" foes="000" cont="0"/>
     </junction>
-    <junction id="gneJ18" type="unregulated" x="7291.84" y="3471.88" incLanes="124433709.427_0 491266613.232_0 491266613.232_1 491266613.232_2" intLanes=":gneJ18_0_0 :gneJ18_1_0 :gneJ18_1_1 :gneJ18_1_2" shape="7337.37,3472.16 7337.27,3468.96 7337.21,3468.35 7335.46,3458.91 7314.23,3463.76 7315.62,3473.26 7320.22,3472.65 7323.63,3472.34 7326.45,3472.24 7329.29,3472.24 7332.72,3472.24"/>
+    <junction id="gneJ18" type="zipper" x="7291.84" y="3471.88" incLanes="124433709.427_0 491266613.232_0 491266613.232_1 491266613.232_2" intLanes=":gneJ18_0_0 :gneJ18_1_0 :gneJ18_1_1 :gneJ18_1_2" shape="7337.37,3472.16 7337.27,3468.96 7337.21,3468.35 7335.46,3458.91 7314.23,3463.76 7315.62,3473.26 7320.22,3472.65 7323.63,3472.34 7326.45,3472.24 7329.29,3472.24 7332.72,3472.24">
+        <request index="0" response="0010" foes="0010" cont="0"/>
+        <request index="1" response="0001" foes="0001" cont="0"/>
+        <request index="2" response="0000" foes="0000" cont="0"/>
+        <request index="3" response="0000" foes="0000" cont="0"/>
+    </junction>
     <junction id="gneJ22" type="zipper" x="7204.95" y="3484.58" incLanes="422314897#0_0 422314897#0_1 422314897#0_2" intLanes=":gneJ22_0_0 :gneJ22_0_1 :gneJ22_0_2" shape="7205.78,3489.31 7204.39,3479.81 7204.01,3479.87 7205.63,3489.33">
         <request index="0" response="000" foes="000" cont="0"/>
         <request index="1" response="000" foes="000" cont="0"/>
@@ -504,11 +519,11 @@
         <request index="2" response="000" foes="000" cont="0"/>
     </junction>
 
-    <connection from="124433709.427" to="422314897#0" fromLane="0" toLane="0" via=":gneJ18_0_0" dir="s" state="M"/>
+    <connection from="124433709.427" to="422314897#0" fromLane="0" toLane="0" via=":gneJ18_0_0" dir="s" state="Z"/>
     <connection from="124433730#0" to="124433730#1-AddedOnRampEdge" fromLane="0" toLane="0" via=":gneJ4_0_0" dir="s" state="M"/>
     <connection from="124433730#0" to="124433730#1-AddedOnRampEdge" fromLane="1" toLane="1" via=":gneJ4_0_1" dir="s" state="M"/>
     <connection from="124433730#0" to="124433730#1-AddedOnRampEdge" fromLane="2" toLane="2" via=":gneJ4_0_2" dir="s" state="M"/>
-    <connection from="124433730#1" to="124433730#2-AddedOnRampEdge" fromLane="0" toLane="0" via=":62339796_1_0" dir="s" state="M"/>
+    <connection from="124433730#1" to="124433730#2-AddedOnRampEdge" fromLane="0" toLane="0" via=":62339796_1_0" dir="s" state="Z"/>
     <connection from="124433730#1" to="124433730#2-AddedOnRampEdge" fromLane="1" toLane="1" via=":62339796_1_1" dir="s" state="M"/>
     <connection from="124433730#1" to="124433730#2-AddedOnRampEdge" fromLane="2" toLane="2" via=":62339796_1_2" dir="s" state="M"/>
     <connection from="124433730#1-AddedOnRampEdge" to="124433730#1" fromLane="0" toLane="0" via=":gneJ3_0_0" dir="s" state="M"/>
@@ -517,7 +532,7 @@
     <connection from="124433730#2-AddedOnRampEdge" to="124433730#2" fromLane="0" toLane="0" via=":gneJ1_0_0" dir="s" state="M"/>
     <connection from="124433730#2-AddedOnRampEdge" to="124433730#2" fromLane="1" toLane="1" via=":gneJ1_0_1" dir="s" state="M"/>
     <connection from="124433730#2-AddedOnRampEdge" to="124433730#2" fromLane="2" toLane="2" via=":gneJ1_0_2" dir="s" state="M"/>
-    <connection from="178253095" to="124433730#2-AddedOnRampEdge" fromLane="0" toLane="0" via=":62339796_0_0" dir="s" state="M"/>
+    <connection from="178253095" to="124433730#2-AddedOnRampEdge" fromLane="0" toLane="0" via=":62339796_0_0" dir="s" state="Z"/>
     <connection from="22723058#0" to="22723058#1" fromLane="0" toLane="0" via=":62290112_0_0" dir="s" state="M"/>
     <connection from="22723058#0" to="22723058#1" fromLane="1" toLane="1" via=":62290112_0_1" dir="s" state="M"/>
     <connection from="22723058#0" to="22723058#1" fromLane="2" toLane="2" via=":62290112_0_2" dir="s" state="M"/>
@@ -539,7 +554,7 @@
     <connection from="422314897#1" to="489256509" fromLane="0" toLane="0" via=":4815187016_0_0" dir="s" state="M"/>
     <connection from="422314897#1" to="489256509" fromLane="1" toLane="1" via=":4815187016_0_1" dir="s" state="M"/>
     <connection from="422314897#1" to="489256509" fromLane="2" toLane="2" via=":4815187016_0_2" dir="s" state="M"/>
-    <connection from="456864110" to="40788302" fromLane="0" toLane="0" via=":gneJ14_1_0" dir="s" state="M"/>
+    <connection from="456864110" to="40788302" fromLane="0" toLane="0" via=":gneJ14_1_0" dir="s" state="Z"/>
     <connection from="456864110" to="40788302" fromLane="1" toLane="1" via=":gneJ14_1_1" dir="s" state="M"/>
     <connection from="456864110" to="40788302" fromLane="2" toLane="2" via=":gneJ14_1_2" dir="s" state="M"/>
     <connection from="489256509" to="456864110" fromLane="0" toLane="0" via=":gneJ17_0_0" dir="s" state="M"/>
@@ -548,7 +563,7 @@
     <connection from="491266613" to="491266613.232" fromLane="0" toLane="0" via=":gneJ42_0_0" dir="s" state="M"/>
     <connection from="491266613" to="491266613.232" fromLane="1" toLane="1" via=":gneJ42_0_1" dir="s" state="M"/>
     <connection from="491266613" to="491266613.232" fromLane="2" toLane="2" via=":gneJ42_0_2" dir="s" state="M"/>
-    <connection from="491266613.232" to="422314897#0" fromLane="0" toLane="0" via=":gneJ18_1_0" dir="s" state="M"/>
+    <connection from="491266613.232" to="422314897#0" fromLane="0" toLane="0" via=":gneJ18_1_0" dir="s" state="Z"/>
     <connection from="491266613.232" to="422314897#0" fromLane="1" toLane="1" via=":gneJ18_1_1" dir="s" state="M"/>
     <connection from="491266613.232" to="422314897#0" fromLane="2" toLane="2" via=":gneJ18_1_2" dir="s" state="M"/>
     <connection from="491515539" to="341040160#0" fromLane="0" toLane="0" via=":gneJ24_0_0" dir="s" state="M"/>
@@ -563,7 +578,7 @@
     <connection from="59440544#1-AddedOffRampEdge" to="22723058#0" fromLane="0" toLane="0" via=":gneJ29_0_0" dir="s" state="M"/>
     <connection from="59440544#1-AddedOffRampEdge" to="22723058#0" fromLane="1" toLane="1" via=":gneJ29_0_1" dir="s" state="M"/>
     <connection from="59440544#1-AddedOffRampEdge" to="22723058#0" fromLane="2" toLane="2" via=":gneJ29_0_2" dir="s" state="M"/>
-    <connection from="8666737" to="40788302" fromLane="0" toLane="0" via=":gneJ14_0_0" dir="s" state="M"/>
+    <connection from="8666737" to="40788302" fromLane="0" toLane="0" via=":gneJ14_0_0" dir="s" state="Z"/>
 
     <connection from=":4308145956_0" to="59440544#1" fromLane="0" toLane="0" dir="s" state="M"/>
     <connection from=":4308145956_0" to="59440544#1" fromLane="1" toLane="1" dir="s" state="M"/>
