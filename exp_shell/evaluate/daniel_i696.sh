@@ -18,7 +18,7 @@ TRAIN_DIR_i696=${HOME}/may13/zipper_merge_i696_window_size_300.0_300.0/PPO_Multi
 TRAIN_DIR_i696_shadow=${HOME}/july7/shadow/PPO_MultiAgentI696ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate-v0_b4c71_00000_0_2022-07-07_19-48-39
 
 mkdir ${EXP_FOLDER}
-WORKING_DIR=$EXP_FOLDER/july17_i696
+WORKING_DIR=$EXP_FOLDER/july23_i696
 mkdir ${WORKING_DIR}
 
 echo "*************add python path to current direction***********"
@@ -32,7 +32,7 @@ MERGE=400
 measurement=8000
 render=no_render
 
-for WINDOW in 100 200 
+for WINDOW in 40 200 400 600 800 
 do
     #python3 $VISUALIZER \
     #            $TRAIN_DIR_i696 \
