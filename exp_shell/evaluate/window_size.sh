@@ -84,7 +84,8 @@ CHCKPOINT=1
 WINDOW_RIGHT=100
 WINDOW_ABOVE=200
 
-render='sumo_gui'
+#render='sumo_gui'
+render='no_render'
 
 #for WINDOW_LEFT in 522.6 #200 400 600 800 1000 #100 200 300 400 500 600 700 800 900 1000
 

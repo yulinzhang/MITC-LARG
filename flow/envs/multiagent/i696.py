@@ -148,6 +148,20 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
                 first_veh=veh_id
         return first_veh
 
+    def find_veh_within_dist(self, edge_id, dist):
+        vehs_on_edge = self.k.vehicle.get_ids_by_edge(edge_id)
+        if vehs_on_edge is None:
+            return None
+
+        edge_len=self.k.network.edge_length(edge_id)
+        vehs_within_window = list()
+        for veh_id in vehs_on_edge:
+            veh_pos=self.k.vehicle.get_position(veh_id)
+            dist_to_junction = edge_len - veh_pos 
+            if dist_to_junction <= dist:
+                vehs_within_window.append(veh_id)
+        return vehs_within_window
+
     def reset_shadow_veh(self, veh_id):
         controller = self.k.vehicle.get_acc_controller(veh_id)
         if controller is not None:
@@ -230,12 +244,18 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
         for i in range(3):
             main_edge = main_edges[i]
             merge_edge = merge_edges[i]
-            first_veh = self.find_first_veh_on_edge(merge_edge)
-            if first_veh is not None:
-                self.set_shadow_vehicle(first_veh, main_edge, merge_edge)
-
+            vehs_within_window = self.find_veh_within_dist(merge_edge, self.junction_before)
+            for veh_id in vehs_within_window:
+                self.set_shadow_vehicle(veh_id, main_edge, merge_edge)
                 if debug:
-                    print("found in ", merge_edge, first_veh, self.k.vehicle.get_position(first_veh))
+                    print("found in ", merge_edge, veh_id, self.k.vehicle.get_position(veh_id))
+
+            #first_veh = self.find_first_veh_on_edge(merge_edge)
+            #if first_veh is not None:
+            #    self.set_shadow_vehicle(first_veh, main_edge, merge_edge)
+
+            #    if debug:
+            #        print("found in ", merge_edge, first_veh, self.k.vehicle.get_position(first_veh))
 
            # first_veh = self.find_first_veh_on_edge(main_edge)
            # if first_veh is not None:
