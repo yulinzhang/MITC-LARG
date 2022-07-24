@@ -275,7 +275,7 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
         #junctions = set(self.k.network.get_junction_list())
 
         # add shadow vehicle
-        print("get_state")
+        #print("get_state")
         if self.shadow_headway:
             print("add shadow")
             self.add_shadow_vehicle()
