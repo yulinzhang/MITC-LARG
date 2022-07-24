@@ -18,7 +18,7 @@ TRAIN_DIR_i696=${HOME}/may13/zipper_merge_i696_window_size_300.0_300.0/PPO_Multi
 TRAIN_DIR_i696_shadow=${HOME}/july7/shadow/PPO_MultiAgentI696ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate-v0_b4c71_00000_0_2022-07-07_19-48-39
 
 mkdir ${EXP_FOLDER}
-WORKING_DIR=$EXP_FOLDER/july23_i696
+WORKING_DIR=$EXP_FOLDER/july24_i696
 mkdir ${WORKING_DIR}
 
 echo "*************add python path to current direction***********"
@@ -28,26 +28,27 @@ CHCKPOINT=1
 
 MAIN_HUMAN=8000
 MAIN_RL=0
-MERGE=400
+MERGE=600
 measurement=8000
 render=no_render
+WINDOW=800
 
-for WINDOW in 40 200 400 600 800 
+for MAIN_HUMAN in 8000 6000 4000 #400 600 800 
 do
-    #python3 $VISUALIZER \
-    #            $TRAIN_DIR_i696 \
-    #            $CHCKPOINT \
-    #            --seed_dir $FLOW_DIR \
-    #            --horizon 14000 \
-    #            --i696 \
-    #            --render_mode ${render} \
-    #            --cpu 52 \
-    #            --num_of_rand_seeds 50 \
-    #            --measurement_rate ${measurement} \
-    #            --lateral_resolution 0.25 \
-    #            --max_deceleration 20 \
-    #            --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
-    #            >> ${WORKING_DIR}/EVAL_idm_${MAIN_HUMAN}_${MAIN_RL}_${MERGE}.txt 
+    python3 $VISUALIZER \
+                $TRAIN_DIR_i696 \
+                $CHCKPOINT \
+                --seed_dir $FLOW_DIR \
+                --horizon 14000 \
+                --i696 \
+                --render_mode ${render} \
+                --cpu 52 \
+                --num_of_rand_seeds 50 \
+                --measurement_rate ${measurement} \
+                --lateral_resolution 0.25 \
+                --max_deceleration 20 \
+                --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
+                >> ${WORKING_DIR}/EVAL_idm_${MAIN_HUMAN}_${MAIN_RL}_${MERGE}.txt 
 
     python3 $VISUALIZER \
                 $TRAIN_DIR_i696_shadow \
@@ -62,7 +63,7 @@ do
                 --lateral_resolution 0.25 \
                 --max_deceleration 20 \
                 --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
-		--window_size $WINDOW $WINDOW $WINDOW \
+                --window_size $WINDOW $WINDOW $WINDOW \
                 >> ${WORKING_DIR}/EVAL_shadow_window_${WINDOW}_${MAIN_HUMAN}_${MAIN_RL}_${MERGE}.txt 
                 #--print_metric_per_time_step_in_file metrics 
 done
