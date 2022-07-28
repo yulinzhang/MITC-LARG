@@ -35,21 +35,21 @@ WINDOW=400
 
 for MAIN_HUMAN in 8000 #400 600 800 
 do
-    #python3 $VISUALIZER \
-    #            $TRAIN_DIR_i696 \
-    #            $CHCKPOINT \
-    #            --seed_dir $FLOW_DIR \
-    #            --horizon 14000 \
-    #            --i696 \
-    #            --render_mode ${render} \
-    #            --cpu 52 \
-    #            --num_of_rand_seeds 50 \
-    #            --measurement_rate ${measurement} \
-    #            --lateral_resolution 0.25 \
-    #            --max_deceleration 20 \
-    #            --window_size $WINDOW $WINDOW $WINDOW \
-    #            --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
-    #            >> ${WORKING_DIR}/EVAL_idm_${MAIN_HUMAN}_${MAIN_RL}_${MERGE}.txt 
+    python3 $VISUALIZER \
+                $TRAIN_DIR_i696 \
+                $CHCKPOINT \
+                --seed_dir $FLOW_DIR \
+                --horizon 14000 \
+                --i696 \
+                --render_mode ${render} \
+                --cpu 52 \
+                --num_of_rand_seeds 50 \
+                --measurement_rate ${measurement} \
+                --lateral_resolution 0.25 \
+                --max_deceleration 20 \
+                --window_size $WINDOW $WINDOW $WINDOW \
+                --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
+                >> ${WORKING_DIR}/EVAL_idm_${MAIN_HUMAN}_${MAIN_RL}_${MERGE}.txt 
 
     python3 $VISUALIZER \
                 $TRAIN_DIR_i696_shadow \
