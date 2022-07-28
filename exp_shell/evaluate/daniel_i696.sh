@@ -28,12 +28,12 @@ CHCKPOINT=1
 
 MAIN_HUMAN=8000
 MAIN_RL=0
-MERGE=200
+MERGE=300
 measurement=8000
 render=no_render
 WINDOW=400
 
-for MAIN_HUMAN in 8000 #400 600 800 
+for MAIN_HUMAN in 6000 #400 600 800 
 do
     python3 $VISUALIZER \
                 $TRAIN_DIR_i696 \
