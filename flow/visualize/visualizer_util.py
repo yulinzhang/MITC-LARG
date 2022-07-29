@@ -611,16 +611,28 @@ def reset_inflows_i696(args, flow_params):
         merge_entrance_from_right_to_left = ["124433709.427", "8666737", "178253095"]
         main_right_entrance = "59440544#0"
         inflow = InFlows()
-        for merge_name in merge_entrance_from_right_to_left:
-            inflow.add(
-                    veh_type="human",
-                    edge=merge_name, # flow id se2w1 from xml file
-                    begin=10,#0,
-                    end=90000,
-                    vehs_per_hour = merge_inflow_rate, #(1 - RL_PENETRATION)*FLOW_RATE,
-                    departSpeed=10,
-                    departLane="free",
-                )
+        if args.to_probability is not None and args.to_probability is True:
+            for merge_name in merge_entrance_from_right_to_left:
+                inflow.add(
+                        veh_type="human",
+                        edge=merge_name, # flow id se2w1 from xml file
+                        begin=10,#0,
+                        end=90000,
+                        probability= merge_inflow_rate/3600.0, #(1 - RL_PENETRATION)*FLOW_RATE,
+                        departSpeed=10,
+                        departLane="free",
+                    )
+        else:
+            for merge_name in merge_entrance_from_right_to_left:
+                inflow.add(
+                        veh_type="human",
+                        edge=merge_name, # flow id se2w1 from xml file
+                        begin=10,#0,
+                        end=90000,
+                        vehs_per_hour = merge_inflow_rate, #(1 - RL_PENETRATION)*FLOW_RATE,
+                        departSpeed=10,
+                        departLane="free",
+                    )
 
         if args.to_probability is not None and args.to_probability is True:
             if main_rl_inflow_rate > 0:
