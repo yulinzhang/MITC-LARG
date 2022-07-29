@@ -636,26 +636,53 @@ def reset_inflows_i696(args, flow_params):
 
         if args.to_probability is not None and args.to_probability is True:
             if main_rl_inflow_rate > 0:
-                inflow.add(
-                    veh_type="rl",
-                    edge=main_right_entrance, # flow id se2w1 from xml file
-                    begin=10,#0,
-                    end=90000,
-                    probability= main_rl_inflow_rate/3600.0, #(1 - RL_PENETRATION)*FLOW_RATE,
-                    departSpeed=10,
-                    departLane="free",
-                    )
+                int_main_rl_inflow_rate = int(main_rl_inflow_rate//1)
+                if int_main_rl_inflow_rate > 0:
+                    for i in range(int_main_rl_inflow_rate):
+                       inflow.add(
+                        veh_type="rl",
+                        edge=main_right_entrance, # flow id se2w1 from xml file
+                        begin=10,#0,
+                        end=90000,
+                        probability= 1.0, #(1 - RL_PENETRATION)*FLOW_RATE,
+                        departSpeed=10,
+                        departLane="free",
+                    ) 
+                fraction_main_rl_inflow_rate = main_rl_inflow_rate - int_main_rl_inflow_rate
+                if fraction_main_rl_inflow_rate > 0:
+                    inflow.add(
+                        veh_type="rl",
+                        edge=main_right_entrance, # flow id se2w1 from xml file
+                        begin=10,#0,
+                        end=90000,
+                        probability= fraction_main_rl_inflow_rate, #(1 - RL_PENETRATION)*FLOW_RATE,
+                        departSpeed=10,
+                        departLane="free",
+                        )
             if main_human_inflow_rate > 0:
-                inflow.add(
-                    veh_type="human",
-                    edge=main_right_entrance, # flow id se2w1 from xml file
-                    begin=10,#0,
-                    end=90000,
-                    probability= main_human_inflow_rate/3600.0, 
-                    departSpeed=10,
-                    departLane="free",
-                    )
-
+                int_main_human_inflow_rate = int(main_human_inflow_rate//1)
+                if int_main_human_inflow_rate > 0:
+                    for i in range(int_main_human_inflow_rate):
+                        inflow.add(
+                            veh_type="human",
+                            edge=main_right_entrance,  # flow id se2w1 from xml file
+                            begin=10,#0,
+                            end=90000,
+                            probability= 1.0, 
+                            departSpeed=10,
+                            departLane="free",
+                            )
+                fraction_main_human_inflow_rate = main_human_inflow_rate - int_main_human_inflow_rate
+                if fraction_main_human_inflow_rate > 0:
+                    inflow.add(
+                        veh_type="human",
+                        edge=main_right_entrance,  # flow id se2w1 from xml file
+                        begin=10,#0,
+                        end=90000,
+                        probability= fraction_main_human_inflow_rate, 
+                        departSpeed=10,
+                        departLane="free",
+                        )
         else:
             if main_rl_inflow_rate > 0:
                 inflow.add(
