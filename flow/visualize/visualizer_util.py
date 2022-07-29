@@ -636,6 +636,7 @@ def reset_inflows_i696(args, flow_params):
 
         if args.to_probability is not None and args.to_probability is True:
             if main_rl_inflow_rate > 0:
+                main_rl_inflow_rate = main_rl_inflow_rate /3600.0
                 int_main_rl_inflow_rate = int(main_rl_inflow_rate//1)
                 if int_main_rl_inflow_rate > 0:
                     for i in range(int_main_rl_inflow_rate):
@@ -659,7 +660,9 @@ def reset_inflows_i696(args, flow_params):
                         departSpeed=10,
                         departLane="free",
                         )
+                                
             if main_human_inflow_rate > 0:
+                main_human_inflow_rate = main_human_inflow_rate/3600.0
                 int_main_human_inflow_rate = int(main_human_inflow_rate//1)
                 if int_main_human_inflow_rate > 0:
                     for i in range(int_main_human_inflow_rate):
@@ -683,6 +686,11 @@ def reset_inflows_i696(args, flow_params):
                         departSpeed=10,
                         departLane="free",
                         )
+
+                # print("main_human", main_human_inflow_rate)
+                # print("int_main_human", int_main_human_inflow_rate)
+                # print("frac_main_human", fraction_main_human_inflow_rate)
+
         else:
             if main_rl_inflow_rate > 0:
                 inflow.add(
@@ -708,6 +716,8 @@ def reset_inflows_i696(args, flow_params):
         
         net_params=flow_params['net']
         net_params.inflows=inflow
+        # print(inflow.get())
+        # input()
 
 def reset_inflows(args, flow_params):
 
