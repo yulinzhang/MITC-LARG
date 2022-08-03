@@ -138,6 +138,7 @@ def set_argument(evaluate=False):
     parser.add_argument('--krauss_controller', action='store_true', help="use the Default Krauss model in SUMO; otherwise, use the idm controller")
     parser.add_argument('--max_deceleration', type=float, help="set the max deceleration")
     parser.add_argument('--num_of_rand_seeds', type=int, help="set the number of random seeds")
+    parser.add_argument('--merge2', type=int, help="set the second merge inflow for i696")
 
     args = parser.parse_args()
     return args
@@ -612,27 +613,49 @@ def reset_inflows_i696(args, flow_params):
         main_right_entrance = "59440544#0"
         inflow = InFlows()
         if args.to_probability is not None and args.to_probability is True:
-            for merge_name in merge_entrance_from_right_to_left:
-                inflow.add(
-                        veh_type="human",
-                        edge=merge_name, # flow id se2w1 from xml file
-                        begin=10,#0,
-                        end=90000,
-                        probability= merge_inflow_rate/3600.0, #(1 - RL_PENETRATION)*FLOW_RATE,
-                        departSpeed=10,
-                        departLane="free",
-                    )
+            for i, merge_name in enumerate(merge_entrance_from_right_to_left):
+                if i == 1 and args.merge2 is not None:
+                    inflow.add(
+                            veh_type="human",
+                            edge=merge_name, # flow id se2w1 from xml file
+                            begin=10,#0,
+                            end=90000,
+                            probability= args.merge2/3600.0, #(1 - RL_PENETRATION)*FLOW_RATE,
+                            departSpeed=10,
+                            departLane="free",
+                        )
+                else:
+                    inflow.add(
+                            veh_type="human",
+                            edge=merge_name, # flow id se2w1 from xml file
+                            begin=10,#0,
+                            end=90000,
+                            probability= merge_inflow_rate/3600.0, #(1 - RL_PENETRATION)*FLOW_RATE,
+                            departSpeed=10,
+                            departLane="free",
+                        )
         else:
-            for merge_name in merge_entrance_from_right_to_left:
-                inflow.add(
-                        veh_type="human",
-                        edge=merge_name, # flow id se2w1 from xml file
-                        begin=10,#0,
-                        end=90000,
-                        vehs_per_hour = merge_inflow_rate, #(1 - RL_PENETRATION)*FLOW_RATE,
-                        departSpeed=10,
-                        departLane="free",
-                    )
+            for i, merge_name in enumerate(merge_entrance_from_right_to_left):
+                if i == 1 and args.merge2 is not None:
+                    inflow.add(
+                            veh_type="human",
+                            edge=merge_name, # flow id se2w1 from xml file
+                            begin=10,#0,
+                            end=90000,
+                            vehs_per_hour = args.merge2, #(1 - RL_PENETRATION)*FLOW_RATE,
+                            departSpeed=10,
+                            departLane="free",
+                        )
+                else:
+                    inflow.add(
+                            veh_type="human",
+                            edge=merge_name, # flow id se2w1 from xml file
+                            begin=10,#0,
+                            end=90000,
+                            vehs_per_hour = merge_inflow_rate, #(1 - RL_PENETRATION)*FLOW_RATE,
+                            departSpeed=10,
+                            departLane="free",
+                        )
 
         if args.to_probability is not None and args.to_probability is True:
             if main_rl_inflow_rate > 0:
