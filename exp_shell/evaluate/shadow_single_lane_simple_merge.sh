@@ -182,8 +182,8 @@ single_lane_simple_merge_shadow=${HOME}/aug3/PPO_MultiAgentMerge4ShadowHeadwayPO
 CHCKPOINT=500
 
 FLOW_DIR=${PWD}/../..
-VISUALIZER=$FLOW_DIR/flow/visualize/new_rllib_visualizer.py
-#VISUALIZER=$FLOW_DIR/flow/visualize/parallized_visualizer.py
+#VISUALIZER=$FLOW_DIR/flow/visualize/new_rllib_visualizer.py
+VISUALIZER=$FLOW_DIR/flow/visualize/parallized_visualizer.py
 EXP_FOLDER=$FLOW_DIR/exp_results
 WORKING_DIR=$EXP_FOLDER/aug4_simple_merge_shadow
 
@@ -217,7 +217,7 @@ CHCKPOINT=1
 mkdir ${WORKING_DIR}
 J=0
 
-for MAIN_HUMAN in 2000 1800 1600 #6000 8000 10000 #400 600 800 
+for MAIN_HUMAN in 2000 1800 1600 1400 1200 #6000 8000 10000 #400 600 800 
 do
     CHCKPOINT=500
     python3 $VISUALIZER \
@@ -232,7 +232,7 @@ do
                 --to_probability \
                 --max_deceleration 20 \
                 --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
-                --window_size $WINDOW $WINDOW $WINDOW 
+                --window_size $WINDOW $WINDOW $WINDOW \
                 >> ${WORKING_DIR}/EVAL_IDM_${MAIN_HUMAN}_${MERGE}.txt 
 
     CHCKPOINT=1
@@ -248,7 +248,7 @@ do
                 --to_probability \
                 --max_deceleration 20 \
                 --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
-                --window_size $WINDOW $WINDOW $WINDOW 
+                --window_size $WINDOW $WINDOW $WINDOW \
                 >> ${WORKING_DIR}/EVAL_shadow_window_${WINDOW}_${MAIN_HUMAN}_${MERGE}.txt 
                 #--print_metric_per_time_step_in_file metrics 
                 #--merge2 ${MERGE2} \
