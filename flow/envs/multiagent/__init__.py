@@ -42,6 +42,8 @@ from flow.envs.multiagent.adaptive_headway import MultiAgentHighwayPOEnvMerge4Ad
 #,MultiAgentHighwayPOEnvMerge4HierarchicalAdaptiveHeadway
 from flow.envs.multiagent.hierarchical_leader_follower import MultiAgentHighwayPOEnvMerge4Hierarchy, MultiAgentHighwayPOEnvMerge4HierarchyCountAhead, MultiAgentHighwayPOEnvMerge4HierarchyDensityAhead,MultiAgentHighwayPOEnvMerge4HierarchyVehiclesBetweenNextRL
 
+from flow.envs.multiagent.simple_merge_shadow import MultiAgentMerge4ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate
+
 
 __all__ = ['MultiEnv', 'MultiAgentAccelEnv', 'MultiWaveAttenuationPOEnv',
            'MultiTrafficLightGridPOEnv', 'MultiAgentHighwayPOEnv',

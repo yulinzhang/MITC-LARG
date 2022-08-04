@@ -144,9 +144,10 @@ def init_agent_from_policy_dir(policy_dir, checkpoint_num):
                     max_checkpoint=checkpoint_num
     else:
         max_checkpoint=checkpoint_num
-    #print("max checkpoint", max_checkpoint)
+    print("max checkpoint", max_checkpoint)
     if max_checkpoint is not None:
         from flow.envs.multiagent.trained_policy import init_policy_agent 
+        print("policy max_checkpoint", max_checkpoint)
         checkpoint_dir=os.path.join(policy_dir, 'checkpoint_'+str(max_checkpoint),'checkpoint-'+str(max_checkpoint))
         return init_policy_agent(policy_dir, checkpoint_dir)
     return None
@@ -165,7 +166,7 @@ def visualizer_rllib(args, do_print_metric_per_time_step=False, seed=None):
     result_dir = args.result_dir if args.result_dir[-1] != '/' \
         else args.result_dir[:-1]
 
-    print(result_dir)
+    print("result dir ***", result_dir)
     config = get_rllib_config(result_dir)
 
     # check if we have a multiagent environment but in a
