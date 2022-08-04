@@ -495,7 +495,7 @@ class IDMController(BaseController):
         h=headways[lane_id] 
         edge_id = env.k.vehicle.get_edge(self.veh_id)
         # check shadow leader
-        if self.shadow_lead_headway is not None and lane_id == 0 and edge_id in ["491266613.232", "456864110", "124433730#1", "left"]:
+        if self.shadow_lead_headway is not None and lane_id == 0: #and edge_id in ["491266613.232", "456864110", "124433730#1", "left"]:
             #dist_to_shadow_leader = (env.k.network.edge_length(edge_id) - env.k.vehicle.get_position(self.veh_id)) - self.shadow_to_junction  
             #print("dist_to_shadow_leader", self.shadow_lead_headway)
             #pass

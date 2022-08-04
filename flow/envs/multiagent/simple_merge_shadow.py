@@ -229,8 +229,8 @@ class MultiAgentMerge4POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
             controller.shadow_lead_headway = shortest_dist_to_junction - scaled_merge_dist_to_junction
 
             if debug:
-                print("-merge edge", merge_edge)
-                print("-set headway of veh behind shadow", first_larger, ":", controller.shadow_lead_headway)
+                #print("-merge edge", merge_edge)
+                print("-set headway of veh behind shadow", merge_veh_to_shadow, "on main road", first_larger, ":", controller.shadow_lead_headway)
 
         last_smaller = self.k.vehicle.get_leader(first_larger) 
         if last_smaller is not None: 
@@ -239,11 +239,12 @@ class MultiAgentMerge4POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
             #merge_veh_to_shadow_controller.shadow_lead_headway = abs(self.k.vehicle.get_position(last_smaller) - scaled_merge_dist_to_junction)
             #print("*****", self.k.vehicle.get_x_by_id(first_larger) - scaled_merge_dist_to_junction)
             merge_shadow_pos = edge_len - scaled_merge_dist_to_junction
-            merge_veh_to_shadow_controller.shadow_lead_headway = abs(self.k.vehicle.get_x_by_id(last_smaller) - self.k.network.get_x(main_edge, merge_shadow_pos))
+            #merge_veh_to_shadow_controller.shadow_lead_headway = abs(self.k.vehicle.get_x_by_id(last_smaller) - self.k.network.get_x(main_edge, merge_shadow_pos))
+            merge_veh_to_shadow_controller.shadow_lead_headway = abs(self.k.vehicle.get_x_by_id(last_smaller) - self.k.vehicle.get_x_by_id(merge_veh_to_shadow))
 
             if debug:
-                print("-set headway of shadow", merge_veh_to_shadow_controller.shadow_lead_headway)
-                print("-veh before shadow", last_smaller)
+                print("-set headway of shadow",merge_veh_to_shadow, "on merge road", merge_veh_to_shadow_controller.shadow_lead_headway)
+                # print("-veh before shadow", last_smaller)
 
         else:
             if debug:
