@@ -501,8 +501,8 @@ class IDMController(BaseController):
             #pass
             prev_h = h
             h = min(h, self.shadow_lead_headway)
-            if h == self.shadow_lead_headway:
-                print("shadow leader set for", self.veh_id, prev_h, "->", h, "on edge", env.k.vehicle.get_edge(self.veh_id))
+            #if h == self.shadow_lead_headway:
+            #    print("shadow leader set for", self.veh_id, prev_h, "->", h, "on edge", env.k.vehicle.get_edge(self.veh_id))
             self.shadow_lead_headway = None
         # in order to deal with ZeroDivisionError
         if abs(h) < 1e-3:
