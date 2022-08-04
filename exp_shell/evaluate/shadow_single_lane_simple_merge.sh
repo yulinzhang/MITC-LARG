@@ -204,7 +204,7 @@ MERGE_INFLOW=200
 
 MAIN_HUMAN=2000
 MAIN_RL=0
-MERGE=300
+MERGE=200
 measurement=8000
 WINDOW=400
 render=no_render
@@ -219,21 +219,21 @@ J=0
 
 for MAIN_HUMAN in 2000 1800 1600 1400 1200 #6000 8000 10000 #400 600 800 
 do
-    CHCKPOINT=500
-    python3 $VISUALIZER \
-                ${TRAIN_DIR[6]} \
-                $CHCKPOINT \
-                --seed_dir $FLOW_DIR \
-                --horizon 4000 \
-                --render_mode ${render} \
-                --num_of_rand_seeds 50 \
-                --cpu 52 \
-                --measurement_rate ${measurement} \
-                --to_probability \
-                --max_deceleration 20 \
-                --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
-                --window_size $WINDOW $WINDOW $WINDOW \
-                >> ${WORKING_DIR}/EVAL_IDM_${MAIN_HUMAN}_${MERGE}.txt 
+    #CHCKPOINT=500
+    #python3 $VISUALIZER \
+    #            ${TRAIN_DIR[6]} \
+    #            $CHCKPOINT \
+    #            --seed_dir $FLOW_DIR \
+    #            --horizon 4000 \
+    #            --render_mode ${render} \
+    #            --num_of_rand_seeds 50 \
+    #            --cpu 52 \
+    #            --measurement_rate ${measurement} \
+    #            --to_probability \
+    #            --max_deceleration 20 \
+    #            --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
+    #            --window_size $WINDOW $WINDOW $WINDOW \
+    #            >> ${WORKING_DIR}/EVAL_IDM_${MAIN_HUMAN}_${MERGE}.txt 
 
     CHCKPOINT=1
     python3 $VISUALIZER \
