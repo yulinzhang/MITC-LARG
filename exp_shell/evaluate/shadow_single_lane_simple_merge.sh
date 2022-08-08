@@ -185,7 +185,7 @@ FLOW_DIR=${PWD}/../..
 #VISUALIZER=$FLOW_DIR/flow/visualize/new_rllib_visualizer.py
 VISUALIZER=$FLOW_DIR/flow/visualize/parallized_visualizer.py
 EXP_FOLDER=$FLOW_DIR/exp_results
-WORKING_DIR=$EXP_FOLDER/aug4_simple_merge_shadow
+WORKING_DIR=$EXP_FOLDER/aug4_simple_merge_shadow2_fixed_measurement
 
 # 1. 1650_200_30 I=4
 # 2. 1850_200_30 I=5
@@ -205,42 +205,42 @@ MERGE_INFLOW=200
 MAIN_HUMAN=2000
 MAIN_RL=0
 MERGE=200
-measurement=8000
+measurement=2000
 WINDOW=400
 render=no_render
 
 CHCKPOINT=1
 
 
-
+HORIZON=6000
 
 mkdir ${WORKING_DIR}
 J=0
 
 for MAIN_HUMAN in 2000 1800 1600 1400 1200 #6000 8000 10000 #400 600 800 
 do
-    #CHCKPOINT=500
-    #python3 $VISUALIZER \
-    #            ${TRAIN_DIR[6]} \
-    #            $CHCKPOINT \
-    #            --seed_dir $FLOW_DIR \
-    #            --horizon 4000 \
-    #            --render_mode ${render} \
-    #            --num_of_rand_seeds 50 \
-    #            --cpu 52 \
-    #            --measurement_rate ${measurement} \
-    #            --to_probability \
-    #            --max_deceleration 20 \
-    #            --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
-    #            --window_size $WINDOW $WINDOW $WINDOW \
-    #            >> ${WORKING_DIR}/EVAL_IDM_${MAIN_HUMAN}_${MERGE}.txt 
+    CHCKPOINT=500
+    python3 $VISUALIZER \
+                ${TRAIN_DIR[6]} \
+                $CHCKPOINT \
+                --seed_dir $FLOW_DIR \
+                --horizon ${HORIZON} \
+                --render_mode ${render} \
+                --num_of_rand_seeds 50 \
+                --cpu 52 \
+                --measurement_rate ${measurement} \
+                --to_probability \
+                --max_deceleration 20 \
+                --handset_inflow $MAIN_HUMAN $MAIN_RL $MERGE \
+                --window_size $WINDOW $WINDOW $WINDOW \
+                >> ${WORKING_DIR}/EVAL_IDM_${MAIN_HUMAN}_${MERGE}.txt 
 
     CHCKPOINT=1
     python3 $VISUALIZER \
                 ${single_lane_simple_merge_shadow} \
                 $CHCKPOINT \
                 --seed_dir $FLOW_DIR \
-                --horizon 4000 \
+                --horizon ${HORIZON}\
                 --render_mode ${render} \
                 --num_of_rand_seeds 50 \
                 --cpu 52 \
