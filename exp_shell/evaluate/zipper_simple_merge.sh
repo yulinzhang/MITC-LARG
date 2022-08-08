@@ -4,8 +4,9 @@ declare -A TRAIN_DIR
 declare -A MARK 
 
 
-zipper_simple_merge=${HOME}/aug7/zipper_simple_merge_Even_Avp_Main_Merge200_Collaborate_lr_schedule_eta1_0.9_eta2_0.1/PPO_MultiAgentHighwayPOEnvMerge4Collaborate-v0_10544_00000_0_2022-08-07_21-16-08
-single_lane_simple_merge_shadow=${HOME}/aug3/PPO_MultiAgentMerge4ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate-v0_bf7ee_00000_0_2022-08-03_22-37-21
+zipper_simple_merge_idm=${HOME}/aug7/zipper_simple_merge_Even_Avp_Main_Merge200_Collaborate_lr_schedule_eta1_0.9_eta2_0.1/PPO_MultiAgentHighwayPOEnvMerge4Collaborate-v0_10544_00000_0_2022-08-07_21-16-08
+zipper_simple_merge_shadow=${HOME}/aug7/zipper_simple_merge_shadow_Main_Merge200_Collaborate_lr_schedule_eta1_0.9_eta2_0.1/PPO_MultiAgentMerge4ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate-v0_3ac32_00000_0_2022-08-07_22-50-22
+
 
 
 FLOW_DIR=${PWD}/../..
@@ -47,7 +48,7 @@ J=0
 for MAIN_HUMAN in 2000 #6000 8000 10000 #400 600 800 
 do
     #python3 $VISUALIZER \
-    #            ${zipper_simple_merge} \
+    #            ${zipper_simple_merge_idm} \
     #            $CHCKPOINT \
     #            --seed_dir $FLOW_DIR \
     #            --horizon 4000 \
@@ -62,8 +63,7 @@ do
     #            >> ${WORKING_DIR}/EVAL_IDM_${MAIN_HUMAN}_${MERGE}.txt 
 
     python3 $VISUALIZER \
-                ${zipper_simple_merge} \
-                --agent_action_policy_dir $single_lane_simple_merge_shadow \
+                ${zipper_simple_merge_shadow} \
                 $CHCKPOINT \
                 --seed_dir $FLOW_DIR \
                 --horizon 4000 \

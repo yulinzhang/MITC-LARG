@@ -23,7 +23,7 @@ from flow.core.params import EnvParams, NetParams, InitialConfig, InFlows, \
 from flow.utils.registry import make_create_env
 from flow.utils.rllib import FlowParamsEncoder
 
-from flow.envs.multiagent import MultiAgentHighwayPOEnvMerge4Collaborate
+from flow.envs.multiagent import MultiAgentHighwayPOEnvMerge4Collaborate, MultiAgentMerge4ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate
 from flow.envs.ring.accel import ADDITIONAL_ENV_PARAMS
 from flow.networks import MergeNetwork, MergeNetworkZipper
 from flow.networks.merge import ADDITIONAL_NET_PARAMS
@@ -82,6 +82,12 @@ additional_net_params["merge_lanes"] = 1
 additional_net_params["highway_lanes"] = 1
 additional_net_params["pre_merge_length"] = 500
 
+if args.window_size is not None:
+    window_size=tuple(args.window_size)
+else:
+    window_size = [400, 400]
+
+
 # SET UP PARAMETERS FOR THE ENVIRONMENT
 mark=""
 if args.exp_folder_mark:
@@ -92,7 +98,7 @@ exp_tag_str='zipper_simple_merge'+mark+'_Collaborate_lr_schedule_eta1_{}_eta2_{}
 flow_params = dict(
     exp_tag=exp_tag_str,
 
-    env_name=MultiAgentHighwayPOEnvMerge4Collaborate,
+    env_name=MultiAgentMerge4ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate,
 
     network=MergeNetworkZipper, # MergeNetwork
 
@@ -123,6 +129,7 @@ flow_params = dict(
             "num_rl": NUM_RL,
             "eta1": ETA_1,
             "eta2": ETA_2,
+            "window_size": window_size,
         },
     ),
 
