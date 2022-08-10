@@ -7,7 +7,7 @@ import collections
 import os
 from statistics import mean
 
-debug = False 
+debug = True 
 
 ADDITIONAL_ENV_PARAMS = {
     # maximum acceleration of autonomous vehicles

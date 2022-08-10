@@ -23,7 +23,7 @@ from flow.core.params import EnvParams, NetParams, InitialConfig, InFlows, \
 from flow.utils.registry import make_create_env
 from flow.utils.rllib import FlowParamsEncoder
 
-from flow.envs.multiagent import MultiAgentHighwayPOEnvMerge4Collaborate, MultiAgentMerge4ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate
+from flow.envs.multiagent import MultiAgentHighwayPOEnvMerge4Collaborate 
 from flow.envs.ring.accel import ADDITIONAL_ENV_PARAMS
 from flow.networks import MergeNetwork, MergeNetworkZipper
 from flow.networks.merge import ADDITIONAL_NET_PARAMS
@@ -70,7 +70,7 @@ RL_PENETRATION = 0.1
 ETA_1 = 0.9 
 if args.eta1 is not None: # default to be 0.9
     ETA_1 = args.eta1
-ETA_2 = 1 - ETA_1
+ETA_2 = round(1 - ETA_1, 1)
 ETA_3 = 0
 if args.eta3 is not None:
     ETA_3 = args.eta3
@@ -98,7 +98,7 @@ exp_tag_str='zipper_simple_merge'+mark+'_Collaborate_lr_schedule_eta1_{}_eta2_{}
 flow_params = dict(
     exp_tag=exp_tag_str,
 
-    env_name=MultiAgentMerge4ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate,
+    env_name=MultiAgentHighwayPOEnvMerge4Collaborate,
 
     network=MergeNetworkZipper, # MergeNetwork
 
