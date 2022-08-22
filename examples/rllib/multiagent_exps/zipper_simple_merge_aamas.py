@@ -38,7 +38,7 @@ args=set_argument()
 # SET UP PARAMETERS FOR THE SIMULATION
 
 # number of training iterations
-N_TRAINING_ITERATIONS = 1 #500
+N_TRAINING_ITERATIONS = 500 #500
 # number of rollouts per training iteration
 N_ROLLOUTS = 30 
 # number of steps per rollout
@@ -93,7 +93,8 @@ mark=""
 if args.exp_folder_mark:
     mark="_"+args.exp_folder_mark
 
-exp_tag_str='zipper_simple_merge'+mark+'_Collaborate_lr_schedule_eta1_{}_eta2_{}'.format(ETA_1, ETA_2)
+#exp_tag_str='zipper_simple_merge'+mark+'_Collaborate_lr_schedule_eta1_{}_eta2_{}'.format(ETA_1, ETA_2)
+exp_tag_str='zipper_simple_merge'+mark
 
 flow_params = dict(
     exp_tag=exp_tag_str,

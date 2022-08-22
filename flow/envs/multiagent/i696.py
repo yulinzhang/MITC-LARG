@@ -100,9 +100,12 @@ class MultiAgentI696POEnvParameterizedWindowSize(MultiAgentHighwayPOEnv):
                 veh_ids_on_edge=temp_vehs
                 edge_with_first_veh=from_edge
             from_edge=self.collect_next_edge(from_edge)
+        if veh_ids_on_edge is None:
+            return None, float('inf')-2, 0
         # find the first merging vehicle
         largest_pos=-1
         first_veh=None
+        #print("veh_ids_on_edge", veh_ids_on_edge)
         for veh_id in veh_ids_on_edge:
             veh_pos=self.k.vehicle.get_position(veh_id)
             if veh_pos>largest_pos:

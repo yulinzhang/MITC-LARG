@@ -36,7 +36,7 @@ from flow.visualize.visualizer_util import reset_inflows, set_argument, reset_in
 args=set_argument()
 
 if args.window_size is not None:
-    if len(args.window_size)!=2:
+    if len(args.window_size)!=3:
         print("The window size has to be two elements: the left distance to the junction, and the right distance to the junction")
         exit(-1)
 

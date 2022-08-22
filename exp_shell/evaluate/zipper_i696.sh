@@ -1,6 +1,6 @@
 FLOW_DIR=${PWD}/../..
-#VISUALIZER=$FLOW_DIR/flow/visualize/new_rllib_visualizer.py
-VISUALIZER=$FLOW_DIR/flow/visualize/parallized_visualizer.py
+VISUALIZER=$FLOW_DIR/flow/visualize/new_rllib_visualizer.py
+#VISUALIZER=$FLOW_DIR/flow/visualize/parallized_visualizer.py
 EXP_FOLDER=$FLOW_DIR/exp_results/
 
 # merge 200
@@ -11,9 +11,12 @@ TRAIN_DIR_i696=${HOME}/ray_results/i696_window_size_300_300/PPO_MultiAgentI696PO
 # single_lane i696
 #TRAIN_DIR_i696=${HOME}/ray_results/i696_window_size_300_300/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_80a69_00000_0_2022-04-30_00-07-58/
 #TRAIN_DIR_i696=${HOME}/ray_results/zyl_i696_window_size_300_300/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_fc465_00000_0_2022-05-01_22-14-32/
-TRAIN_DIR_i696=${HOME}/ray_results/zyl_i696_window_size_300_300/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_f7bca_00000_0_2022-05-02_16-00-59/
 
 TRAIN_DIR_i696=${HOME}/may13/zipper_merge_i696_window_size_300.0_300.0/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_c8963_00000_0_2022-05-13_20-40-06
+
+TRAIN_DIR_i696=${HOME}/aug18/zyl_i696_window_size_300_300/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_f7bca_00000_0_2022-05-02_16-00-59/
+#TRAIN_DIR_i696=/home/users/yulin/ray_results/aug21_i696_window_size_400.0_400.0/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_a5a2c_00000_0_2022-08-21_20-20-45
+
 #TRAIN_DIR_i696=${HOME}/jun27/shadow_i696/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_95f34_00000_0_2022-06-27_18-48-03
 TRAIN_DIR_i696_shadow=${HOME}/july7/shadow/PPO_MultiAgentI696ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate-v0_b4c71_00000_0_2022-07-07_19-48-39
 
@@ -42,7 +45,7 @@ do
     for MAIN_INFLOW in 4000 6000 8000 10000 #400 600 800 
     do
         # Human
-        python3 $VISUALIZER \
+         python3 $VISUALIZER \
                     $TRAIN_DIR_i696 \
                     $CHCKPOINT \
                     --seed_dir $FLOW_DIR \
