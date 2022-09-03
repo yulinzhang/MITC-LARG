@@ -25,7 +25,7 @@ priority_simple_merge_aamas=${HOME}/aug10/priority_simple_merge_Main2000_Merge20
 
 
 mkdir ${EXP_FOLDER}
-WORKING_DIR=$EXP_FOLDER/aug18_prob_i696
+WORKING_DIR=$EXP_FOLDER/sep3_prob_i696
 mkdir ${WORKING_DIR}
 
 echo "*************add python path to current direction***********"
