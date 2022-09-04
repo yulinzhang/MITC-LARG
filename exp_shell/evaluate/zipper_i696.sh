@@ -40,12 +40,12 @@ measurement=8000
 render=no_render
 WINDOW=400
 
-for MERGE in 200 #300
+for MERGE in 400 #300
 do
     for MAIN_INFLOW in 4500 5000 5500 #400 600 800 
     do
                 
-        for AVP in 30 100
+        for AVP in 30 #100
         do
             let MAIN_RL_INFLOW=MAIN_INFLOW*${AVP}/100
             let MAIN_HUMAN_INFLOW=MAIN_INFLOW-MAIN_RL_INFLOW
@@ -89,6 +89,24 @@ do
                     --to_probability \
                     --handset_inflow $MAIN_INFLOW 0 $MERGE \
 		    >> ${WORKING_DIR}/EVAL_idm_${MAIN_INFLOW}_${MERGE}.txt 
+
+	# Human
+         python3 $VISUALIZER \
+                    $TRAIN_DIR_i696_shadow \
+                    $CHCKPOINT \
+                    --seed_dir $FLOW_DIR \
+                    --horizon 14000 \
+                    --i696 \
+                    --render_mode ${render} \
+                    --cpu 52 \
+                    --num_of_rand_seeds 50 \
+                    --measurement_rate ${measurement} \
+                    --lateral_resolution 0.25 \
+                    --max_deceleration 20 \
+                    --window_size $WINDOW $WINDOW $WINDOW \
+                    --to_probability \
+                    --handset_inflow $MAIN_INFLOW 0 $MERGE \
+		    >> ${WORKING_DIR}/EVAL_true_shadow_${MAIN_INFLOW}_${MERGE}.txt 
 
     done
 done
