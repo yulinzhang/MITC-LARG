@@ -139,7 +139,7 @@ def set_argument(evaluate=False):
     parser.add_argument('--max_deceleration', type=float, help="set the max deceleration")
     parser.add_argument('--num_of_rand_seeds', type=int, help="set the number of random seeds")
     parser.add_argument('--merge2', type=int, help="set the second merge inflow for i696")
-    parser.add_argument('--policy_to_lane_index', type=int, help="apply the policy only to the lane with matched index (0: right most lane)"
+    parser.add_argument('--policy_to_lane_index', type=int, help="apply the policy only to the lane with matched index (0: right most lane)")
 
     args = parser.parse_args()
     return args
