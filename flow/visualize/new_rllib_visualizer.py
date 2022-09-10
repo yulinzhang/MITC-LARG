@@ -525,6 +525,11 @@ def visualizer_rllib(args, do_print_metric_per_time_step=False, seed=None):
             if multiagent:
                 action = {}
                 for agent_id in state.keys():
+                    # check the lane id
+                    if args.policy_to_lane_index is not None:
+                        agent_lane_id = env.unwrapped.k.vehicle.get_lane(agent_id)
+                        if args.policy_to_lane_index != agent_lane_id:
+                            continue
                     if use_lstm:
                         if args.policy_observation_size:
                             truncated_state = state[agent_id][0:args.policy_observation_size]
