@@ -609,7 +609,8 @@ def reset_inflows_i696(args, flow_params):
         #speed_mode = SPEED_MODE_SAFE_SPEED_ACCELEARTION_BOUND_RIGHT_OF_WAY_OUTSIDE_NOT_INSIDE
         #print("speed_mode", speed_mode)
         add_vehicles_with_lane_change(vehicles, "human", speed_mode, 0, 1000000, 100, -1)
-        add_vehicles_with_lane_change(vehicles, "rl", speed_mode, 0, 1000000, 100, -1)
+        #add_vehicles_with_lane_change(vehicles, "rl", speed_mode, 0, 1000000, 100, -1)
+        add_vehicles_no_lane_change(vehicles, "rl", speed_mode, 0, 1000000, 100, -1)
         
         flow_params['veh']=vehicles
         merge_entrance_from_right_to_left = ["124433709.427", "8666737", "178253095"]
@@ -625,7 +626,7 @@ def reset_inflows_i696(args, flow_params):
                             end=90000,
                             probability= args.merge2/3600.0, #(1 - RL_PENETRATION)*FLOW_RATE,
                             departSpeed=10,
-                            departLane="free",
+                            departLane="random",
                         )
                 else:
                     inflow.add(
@@ -635,7 +636,7 @@ def reset_inflows_i696(args, flow_params):
                             end=90000,
                             probability= merge_inflow_rate/3600.0, #(1 - RL_PENETRATION)*FLOW_RATE,
                             departSpeed=10,
-                            departLane="free",
+                            departLane="random",
                         )
         else:
             for i, merge_name in enumerate(merge_entrance_from_right_to_left):
@@ -647,7 +648,7 @@ def reset_inflows_i696(args, flow_params):
                             end=90000,
                             vehs_per_hour = args.merge2, #(1 - RL_PENETRATION)*FLOW_RATE,
                             departSpeed=10,
-                            departLane="free",
+                            departLane="random",
                         )
                 else:
                     inflow.add(
@@ -657,7 +658,7 @@ def reset_inflows_i696(args, flow_params):
                             end=90000,
                             vehs_per_hour = merge_inflow_rate, #(1 - RL_PENETRATION)*FLOW_RATE,
                             departSpeed=10,
-                            departLane="free",
+                            departLane="random",
                         )
         
         if args.to_probability is not None and args.to_probability is True:
@@ -673,7 +674,7 @@ def reset_inflows_i696(args, flow_params):
                         end=90000,
                         probability= 1.0, #(1 - RL_PENETRATION)*FLOW_RATE,
                         departSpeed=10,
-                        departLane="free",
+                        departLane="random",
                     ) 
                 fraction_main_rl_inflow_rate = main_rl_inflow_rate - int_main_rl_inflow_rate
                 if fraction_main_rl_inflow_rate > 0:
@@ -684,7 +685,7 @@ def reset_inflows_i696(args, flow_params):
                         end=90000,
                         probability= fraction_main_rl_inflow_rate, #(1 - RL_PENETRATION)*FLOW_RATE,
                         departSpeed=10,
-                        departLane="free",
+                        departLane="random",
                         )
                                 
             if main_human_inflow_rate > 0:
@@ -699,7 +700,7 @@ def reset_inflows_i696(args, flow_params):
                             end=90000,
                             probability= 1.0, 
                             departSpeed=10,
-                            departLane="free",
+                            departLane="random",
                             )
                 fraction_main_human_inflow_rate = main_human_inflow_rate - int_main_human_inflow_rate
                 if fraction_main_human_inflow_rate > 0:
@@ -710,7 +711,7 @@ def reset_inflows_i696(args, flow_params):
                         end=90000,
                         probability= fraction_main_human_inflow_rate, 
                         departSpeed=10,
-                        departLane="free",
+                        departLane="random",
                         )
 
             if args.num_av_to_lane_index is not None:
@@ -723,7 +724,7 @@ def reset_inflows_i696(args, flow_params):
                         edge=main_right_entrance, # flow id se2w1 from xml file
                         begin=10,#0,
                         end=90000,
-                        vehs_per_hour=rl_flow/3600.0,
+                        probability=rl_flow/3600.0,
                         departSpeed=10,
                         departLane=lane_idx,
                         )
@@ -750,7 +751,7 @@ def reset_inflows_i696(args, flow_params):
                     end=90000,
                     vehs_per_hour = main_human_inflow_rate, #(1 - RL_PENETRATION)*FLOW_RATE,
                     departSpeed=10,
-                    departLane="free",
+                    departLane="random",
                     )
             
             if args.num_av_to_lane_index is not None:
