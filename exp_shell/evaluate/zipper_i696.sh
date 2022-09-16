@@ -40,9 +40,9 @@ measurement=8000
 render=no_render
 WINDOW=400
 
-for MERGE in 200 #300
+for MERGE in 300 
 do
-    for MAIN_INFLOW in 4500 5000 5500 #400 600 800 
+    for MAIN_INFLOW in 6000 #400 600 800 
     do
                 
         
@@ -85,11 +85,13 @@ do
                         --measurement_rate ${measurement} \
                         --lateral_resolution 0.25 \
                         --max_deceleration 20 \
-                        --handset_inflow $MAIN_HUMAN_INFLOW $MAIN_RL_INFLOW $MERGE \
+                        --handset_inflow $MAIN_HUMAN_INFLOW 0 $MERGE \
                         --window_size $WINDOW $WINDOW $WINDOW \
-			--policy_to_lane_index 0 \
-                        >> ${WORKING_DIR}/EVAL_shadow_window_${WINDOW}_${MAIN_HUMAN_INFLOW}_${MAIN_RL_INFLOW}_${MERGE}.txt 
+			--num_av_to_lane_index $MAIN_RL_INFLOW 0 \
+                        >> ${WORKING_DIR}/EVAL_aamas_${WINDOW}_${MAIN_HUMAN_INFLOW}_${MAIN_RL_INFLOW}_${MERGE}.txt 
                         #--print_metric_per_time_step_in_file metrics 
+                        #--handset_inflow $MAIN_HUMAN_INFLOW $MAIN_RL_INFLOW $MERGE \
+			#--policy_to_lane_index 0 \
         done
 
 	## Human

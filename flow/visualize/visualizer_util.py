@@ -140,6 +140,8 @@ def set_argument(evaluate=False):
     parser.add_argument('--num_of_rand_seeds', type=int, help="set the number of random seeds")
     parser.add_argument('--merge2', type=int, help="set the second merge inflow for i696")
     parser.add_argument('--policy_to_lane_index', type=int, help="apply the policy only to the lane with matched index (0: right most lane)")
+    parser.add_argument('--num_av_to_lane_index', type=int, nargs="+", help="apply the policy only to the lane with matched index (0: right most lane)")
+
 
     args = parser.parse_args()
     return args
@@ -657,7 +659,7 @@ def reset_inflows_i696(args, flow_params):
                             departSpeed=10,
                             departLane="free",
                         )
-
+        
         if args.to_probability is not None and args.to_probability is True:
             if main_rl_inflow_rate > 0:
                 main_rl_inflow_rate = main_rl_inflow_rate /3600.0
@@ -711,6 +713,20 @@ def reset_inflows_i696(args, flow_params):
                         departLane="free",
                         )
 
+            if args.num_av_to_lane_index is not None:
+                if len(args.num_av_to_lane_index) != 2:
+                    print("please specify 2 numbers for num_av_to_lane_index: one for the number of AVs (veh/hour), and one for the lane index it is spawned to.")
+                rl_flow = args.num_av_to_lane_index[0]
+                lane_idx = args.num_av_to_lane_index[1]
+                inflow.add(
+                        veh_type="rl",
+                        edge=main_right_entrance, # flow id se2w1 from xml file
+                        begin=10,#0,
+                        end=90000,
+                        vehs_per_hour=rl_flow/3600.0,
+                        departSpeed=10,
+                        departLane=lane_idx,
+                        )
                 # print("main_human", main_human_inflow_rate)
                 # print("int_main_human", int_main_human_inflow_rate)
                 # print("frac_main_human", fraction_main_human_inflow_rate)
@@ -737,7 +753,21 @@ def reset_inflows_i696(args, flow_params):
                     departLane="free",
                     )
             
-        
+            if args.num_av_to_lane_index is not None:
+                if len(args.num_av_to_lane_index) != 2:
+                    print("please specify 2 numbers for num_av_to_lane_index: one for the number of AVs (veh/hour), and one for the lane index it is spawned to.")
+                rl_flow = args.num_av_to_lane_index[0]
+                lane_idx = args.num_av_to_lane_index[1]
+                inflow.add(
+                        veh_type="rl",
+                        edge=main_right_entrance, # flow id se2w1 from xml file
+                        begin=10,#0,
+                        end=90000,
+                        vehs_per_hour=rl_flow,
+                        departSpeed=10,
+                        departLane=lane_idx,
+                        )
+
         net_params=flow_params['net']
         net_params.inflows=inflow
         # print(inflow.get())
