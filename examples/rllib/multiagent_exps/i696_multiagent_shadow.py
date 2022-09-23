@@ -36,9 +36,10 @@ from flow.visualize.visualizer_util import reset_inflows, set_argument, reset_in
 args=set_argument()
 
 if args.window_size is not None:
-    if len(args.window_size)!=2:
-        print("The window size has to be two elements: the left distance to the junction, and the right distance to the junction")
+    if len(args.window_size)!=3:
+        print("The window size has to be three elements: the left distance to the junction, and the right distance to the junction, the distance to the junction from the merge lane")
         exit(-1)
+
 
 # SET UP PARAMETERS FOR THE SIMULATION
 
@@ -78,7 +79,8 @@ scenario_road_data = {"name" : "I696_ONE_LANE",
             #"net" : os.path.join(scenarios_dir, 'i696', 'i696-three-merges.net.xml'), 
             #"net" : os.path.join(scenarios_dir, 'i696', 'multilane-i696-three-merges.net.xml'), 
             #"net" : os.path.join(scenarios_dir, 'i696', 'modified-multilane-i696-three-merges.net.xml'), 
-            "net" : os.path.join(scenarios_dir, 'i696', 'junction-controller-disabled-multilane-i696-three-merges.net.xml'), 
+            "net" : os.path.join(scenarios_dir, 'i696', 'priority-modified-multilane-i696-three-merges.net.xml'), 
+            #"net" : os.path.join(scenarios_dir, 'i696', 'junction-controller-disabled-multilane-i696-three-merges.net.xml'), 
             #"net" : os.path.join(scenarios_dir, 'i696', 'osm.net.i696_onelane.xml'), 
             #"rou" : [os.path.join(scenarios_dir, 'i696', 'i696.rou.xml')],
             "rou" : [os.path.join(scenarios_dir, 'i696', 'i696.three.merges.rou.xml')],

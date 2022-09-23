@@ -23,7 +23,8 @@ TRAIN_DIR_i696_shadow=${HOME}/july7/shadow/PPO_MultiAgentI696ShadowHeadwayPOEnvP
 zipper_simple_merge_aamas=${HOME}/aug10/zipper_simple_merge_aamas_Main2000_Merge200_AVP30/PPO_MultiAgentHighwayPOEnvMerge4Collaborate-v0_0e8b3_00000_0_2022-08-10_14-53-08
 priority_simple_merge_aamas=${HOME}/aug10/priority_simple_merge_Main2000_Merge200_AVP30/PPO_MultiAgentHighwayPOEnvMerge4Collaborate-v0_50fc3_00000_0_2022-08-10_16-49-31
 
-priority_i696=${HOME}/sep22/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_098c4_00000_0_2022-09-22_21-47-17/
+priority_i696=${HOME}/sep22/priority_merge_i696_window_size_400.0_400.0/PPO_MultiAgentI696POEnvParameterizedWindowSizeCollaborate-v0_098c4_00000_0_2022-09-22_21-47-17/
+priority_i696_shadow=${HOME}/sep22/priority_merge_shadow_i696_window_size_400.0_400.0/PPO_MultiAgentI696ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate-v0_26669_00000_0_2022-09-22_22-38-12
 
 mkdir ${EXP_FOLDER}
 WORKING_DIR=$EXP_FOLDER/sep15_prob_i696
@@ -49,7 +50,7 @@ do
         
         # Human
          python3 $VISUALIZER \
-                    $priority_i696 \
+                    $priority_i696_shadow \
                     $CHCKPOINT \
                     --seed_dir $FLOW_DIR \
                     --horizon 14000 \
