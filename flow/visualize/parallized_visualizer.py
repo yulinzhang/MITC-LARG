@@ -623,7 +623,7 @@ def visualizer_rllib(args, do_print_metric_per_time_step=False, seed=None):
                         agent_lane_id = env.unwrapped.k.vehicle.get_lane(agent_id)
                         if args.policy_to_lane_index != agent_lane_id:
                             # change the output to IDM controller output
-                            IDMController idm = IDMController(agent_id)
+                            idm = IDMController(agent_id)
                             action[agent_id] = idm.get_accel(env)
                             continue
 
