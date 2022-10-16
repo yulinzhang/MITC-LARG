@@ -141,6 +141,7 @@ def set_argument(evaluate=False):
     parser.add_argument('--merge2', type=int, help="set the second merge inflow for i696")
     parser.add_argument('--policy_to_lane_index', type=int, help="apply the policy only to the lane with matched index (0: right most lane)")
     parser.add_argument('--num_av_to_lane_index', type=int, nargs="+", help="apply the policy only to the lane with matched index (0: right most lane)")
+    parser.add_argument('--num_human_to_lane_index', type=int, nargs="+", help="add human drivers to the lane with matched index (0: right most lane)")
 
 
     args = parser.parse_args()
@@ -611,6 +612,7 @@ def reset_inflows_i696(args, flow_params):
         add_vehicles_with_lane_change(vehicles, "human", speed_mode, 0, 1000000, 100, -1)
         #add_vehicles_with_lane_change(vehicles, "rl", speed_mode, 0, 1000000, 100, -1)
         add_vehicles_no_lane_change(vehicles, "rl", speed_mode, 0, 1000000, 100, -1)
+        add_vehicles_no_lane_change(vehicles, "human_no_lc", speed_mode, 0, 1000000, 100, -1)
         
         flow_params['veh']=vehicles
         merge_entrance_from_right_to_left = ["124433709.427", "8666737", "178253095"]
@@ -745,7 +747,34 @@ def reset_inflows_i696(args, flow_params):
                 # print("main_human", main_human_inflow_rate)
                 # print("int_main_human", int_main_human_inflow_rate)
                 # print("frac_main_human", fraction_main_human_inflow_rate)
-
+            if args.num_human_to_lane_index is not None:
+                if len(args.num_human_to_lane_index) != 2:
+                    print("please specify 2 numbers for num_av_to_lane_index: one for the number of AVs (veh/hour), and one for the lane index it is spawned to.")
+                human_flow = args.num_human_to_lane_index[0]
+                lane_idx = args.num_human_to_lane_index[1]
+                human_flow_rate = human_flow / 3600.0 
+                int_human_flow_rate = int(human_flow_rate//1) 
+                for i in range(int_human_flow_rate):
+                    inflow.add(
+                        veh_type="human_no_lc",
+                        edge=main_right_entrance, # flow id se2w1 from xml file
+                        begin=10,#0,
+                        end=90000,
+                        probability=1.0,
+                        depart_speed=10,
+                        depart_lane=lane_idx,
+                        )
+                fraction_human_flow_rate = human_flow_rate - int_human_flow_rate
+                if fraction_human_flow_rate > 0:
+                    inflow.add(
+                            veh_type="human_no_lc",
+                            edge=main_right_entrance, # flow id se2w1 from xml file
+                            begin=10,#0,
+                            end=90000,
+                            probability=fraction_human_flow_rate,
+                            depart_speed=10,
+                            depart_lane=lane_idx,
+                            )
         else:
             if main_rl_inflow_rate > 0:
                 inflow.add(
@@ -779,6 +808,20 @@ def reset_inflows_i696(args, flow_params):
                         begin=10,#0,
                         end=90000,
                         vehs_per_hour=rl_flow,
+                        depart_speed=10,
+                        depart_lane=lane_idx,
+                        )
+            if args.num_human_to_lane_index is not None:
+                if len(args.num_human_to_lane_index) != 2:
+                    print("please specify 2 numbers for num_av_to_lane_index: one for the number of AVs (veh/hour), and one for the lane index it is spawned to.")
+                human_flow = args.num_human_to_lane_index[0]
+                lane_idx = args.num_human_to_lane_index[1]
+                inflow.add(
+                        veh_type="human_no_lc",
+                        edge=main_right_entrance, # flow id se2w1 from xml file
+                        begin=10,#0,
+                        end=90000,
+                        vehs_per_hour=human_flow,
                         depart_speed=10,
                         depart_lane=lane_idx,
                         )
