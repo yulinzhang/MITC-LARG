@@ -27,7 +27,7 @@ priority_i696=${HOME}/sep22/priority_merge_i696_window_size_400.0_400.0/PPO_Mult
 priority_i696_shadow=${HOME}/sep22/priority_merge_shadow_i696_window_size_400.0_400.0/PPO_MultiAgentI696ShadowHeadwayPOEnvParameterizedWindowSizeCollaborate-v0_26669_00000_0_2022-09-22_22-38-12
 
 mkdir ${EXP_FOLDER}
-WORKING_DIR=$EXP_FOLDER/oct15_priority_i696
+WORKING_DIR=$EXP_FOLDER/oct21_priority_i696
 mkdir ${WORKING_DIR}
 
 echo "*************add python path to current direction***********"
@@ -44,10 +44,10 @@ WINDOW=400
 
 for MERGE in 300 
 do
-    for MAIN_INFLOW in 4000 # 4500 5000 5500 6000 #400 600 800 
+    for MAIN_INFLOW in 1000 2000 2500 3000 3500 #400 600 800 
     do
                 
-        for AVP in 10 # 30
+        for AVP in 10 30
         do
             let MAIN_HUMAN_INFLOW_NO_LC=MAIN_INFLOW*${AVP}/100
             let MAIN_HUMAN_INFLOW=MAIN_INFLOW-MAIN_HUMAN_INFLOW_NO_LC
@@ -96,37 +96,37 @@ do
         #            --handset_inflow $MAIN_INFLOW 0 $MERGE \
 	#	    >> ${WORKING_DIR}/EVAL_idm_${MAIN_INFLOW}_${MERGE}.txt 
 
-	# for AVP in 10 30
-        # do
-        #     let MAIN_RL_INFLOW=MAIN_INFLOW*${AVP}/100
-        #     let MAIN_HUMAN_INFLOW=MAIN_INFLOW-MAIN_RL_INFLOW
-        #     echo "Avp:${AVP}, Inflows:${MAIN_HUMAN_INFLOW} ${MAIN_RL_INFLOW} ${MERGE}"
+	for AVP in 10 30
+        do
+            let MAIN_RL_INFLOW=MAIN_INFLOW*${AVP}/100
+            let MAIN_HUMAN_INFLOW=MAIN_INFLOW-MAIN_RL_INFLOW
+            echo "Avp:${AVP}, Inflows:${MAIN_HUMAN_INFLOW} ${MAIN_RL_INFLOW} ${MERGE}"
 
-        #     # AAMAS
-        #     python3 $VISUALIZER \
-        #                 $priority_i696 \
-        #                 $CHCKPOINT \
-        #                 --agent_action_policy_dir $priority_simple_merge_aamas \
-        #                 --seed_dir $FLOW_DIR \
-        #                 --horizon 14000 \
-        #                 --i696 \
-        #                 --render_mode ${render} \
-        #                 --num_of_rand_seeds 50 \
-        #                 --cpu 52 \
-        #                 --to_probability \
-        #                 --measurement_rate ${measurement} \
-        #                 --lateral_resolution 0.25 \
-        #                 --max_deceleration 20 \
-        #                 --handset_inflow $MAIN_HUMAN_INFLOW 0 $MERGE \
-        #                 --num_av_to_lane_index $MAIN_RL_INFLOW 0 \
-        #                 --window_size $WINDOW $WINDOW $WINDOW \
-        #                 >> ${WORKING_DIR}/EVAL_aamas_${WINDOW}_${MAIN_HUMAN_INFLOW}_${MAIN_RL_INFLOW}_${MERGE}.txt 
-        #                 #--print_metric_per_time_step_in_file metrics 
-        #                 #--handset_inflow $MAIN_HUMAN_INFLOW $MAIN_RL_INFLOW $MERGE \
-        #                 #--handset_inflow $MAIN_HUMAN_INFLOW 0 $MERGE \
-        #                 #--num_av_to_lane_index $MAIN_RL_INFLOW 0 \
-	# 		#--policy_to_lane_index 0 \
-        # done
+            # AAMAS
+            python3 $VISUALIZER \
+                        $priority_i696 \
+                        $CHCKPOINT \
+                        --agent_action_policy_dir $priority_simple_merge_aamas \
+                        --seed_dir $FLOW_DIR \
+                        --horizon 14000 \
+                        --i696 \
+                        --render_mode ${render} \
+                        --num_of_rand_seeds 50 \
+                        --cpu 52 \
+                        --to_probability \
+                        --measurement_rate ${measurement} \
+                        --lateral_resolution 0.25 \
+                        --max_deceleration 20 \
+                        --handset_inflow $MAIN_HUMAN_INFLOW 0 $MERGE \
+                        --num_av_to_lane_index $MAIN_RL_INFLOW 0 \
+                        --window_size $WINDOW $WINDOW $WINDOW \
+                        >> ${WORKING_DIR}/EVAL_aamas_${WINDOW}_${MAIN_HUMAN_INFLOW}_${MAIN_RL_INFLOW}_${MERGE}.txt 
+                        #--print_metric_per_time_step_in_file metrics 
+                        #--handset_inflow $MAIN_HUMAN_INFLOW $MAIN_RL_INFLOW $MERGE \
+                        #--handset_inflow $MAIN_HUMAN_INFLOW 0 $MERGE \
+                        #--num_av_to_lane_index $MAIN_RL_INFLOW 0 \
+			#--policy_to_lane_index 0 \
+        done
 
 	# shadow
         # python3 $VISUALIZER \
